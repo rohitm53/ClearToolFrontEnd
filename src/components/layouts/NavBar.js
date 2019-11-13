@@ -7,7 +7,7 @@ class NavBar extends Component {
             <div>
                 <nav className="navbar navbar-expand-sm navbar-dark mb-4">
                     <div className="container">
-                        <Link to="/dashboad" className="navbar-brand">
+                        <Link to="/dashboard" className="navbar-brand">
                             Clean Master
                         </Link>
                         <button className="navbar-toggler" type="button" data-toggle="collapse"
@@ -18,16 +18,16 @@ class NavBar extends Component {
                         <div className="collapse navbar-collapse" id="mobile-nav">
                             <ul className="navbar-nav mr-auto">
                                 <li className="nav-item">
-                                    <Link className="nav-link">Dashboard</Link>
+                                    <Link to="/dashboard" className="nav-link">Dashboard</Link>
                                 </li>
                             </ul>
 
                             <ul className="navbar-nav ml-auto">
                                 <li className="nav-item">
-                                    <Link className="nav-link">Register</Link>
+                                    <Link to="/register" className="nav-link">Register</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link">Sign Out</Link>
+                                    <a  className="nav-link">Sign Out</a>
                                 </li>
                             </ul>
                         </div>
