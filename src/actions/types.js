@@ -1,3 +1,4 @@
 export const GET_ERRORS="GET_ERRORS";
 export const GET_SERVICES="GET_SERVICES";
 export const GET_SERVICE="GET_SERVICE";
+export const DELETE_SERVICE="DELETE_SERVICE";

@@ -7,6 +7,8 @@ import store from './store';
 import NavBar from './components/layouts/NavBar';
 import Dashboard from './components/Dashboard';
 import AddService from './components/service/AddService';
+import UpdateService from './components/service/UpdateService';
+import EmployeeList from './components/employees/EmployeeList';
 
 class App extends Component {
   render() {
@@ -15,8 +17,10 @@ class App extends Component {
             <Router>
               <div className="App">
                   <NavBar />
-                  <Route path="/dashboard" component={Dashboard}/>
-                  <Route path="/addservice" component={AddService}/>
+                  <Route exact path="/dashboard" component={Dashboard}/>
+                  <Route exact path="/addservice" component={AddService}/>
+                  <Route exact path="/updateservice/:serviceCode" component={UpdateService}/>
+                  <Route exact path="/employeelist" component={EmployeeList}/>
               </div>
             </Router>
         </Provider>

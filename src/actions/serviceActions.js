@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {GET_ERRORS,GET_SERVICES,GET_SERVICE} from './types';
+import {GET_ERRORS,GET_SERVICES,GET_SERVICE, DELETE_SERVICE} from './types';
 
 export const createService = (service,history) => async dispatch => {
 
@@ -43,4 +43,23 @@ export const getService=(id,history) => async dispatch => {
     }catch(err){
         history.push("/dashboard");
     }
+}
+
+export const deleteService = (id) => async dispatch => {
+
+    try{
+        if(window.confirm("Are you sure you want to delete this service")){
+            await axios.delete(`api/services/${id}`);
+            dispatch({
+                type:DELETE_SERVICE,
+                payload:id
+            });
+        }
+    }catch(err){
+        dispatch({
+            type:GET_ERRORS,
+            payload:err.response.data
+        });
+    }
+   
 }

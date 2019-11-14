@@ -1,72 +1,92 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import classnames from 'classnames';
-import {createService} from "../../actions/serviceActions";
+import {getService,createService} from '../../actions/serviceActions';
 
-class AddService extends Component {
+class UpdateService extends Component {
 
     constructor(props) {
         super(props);
         this.state={
-            serviceCode:'',
-            serviceName:'',
-            noOfEmpReq:'',
+            id: '',
+            serviceCode: '',
+            serviceName: '',
+            noOfEmpReq: '',
+            create_at:'',
             errors:{}
         }
     }
 
+    componentDidMount(){
+        const {serviceCode} = this.props.match.params;
+        this.props.getService(serviceCode,this.props.history);
+    }
+
     componentWillReceiveProps(nextProps){
+
         if(nextProps.errors){
             this.setState({errors:nextProps.errors});
         }
+
+        const {
+            id,
+            serviceCode,
+            serviceName,
+            noOfEmpReq,
+            create_at,
+        } = nextProps.service;
+
+        this.setState({
+            id,
+            serviceCode,
+            serviceName,
+            noOfEmpReq,
+            create_at
+        });
     }
 
-    onChange=(e)=> {
+    onChange = (e)=> {
         this.setState({[e.target.name]:e.target.value});
     }
 
-    onSubmit=(e)=> {
+    onUpdate = (e) => {
         e.preventDefault();
-        const service = {
+
+        const updatedService = {
+            id:this.state.id,
             serviceCode:this.state.serviceCode,
             serviceName:this.state.serviceName,
-            noOfEmpReq:this.state.noOfEmpReq
+            noOfEmpReq:this.state.noOfEmpReq,
+            create_at:this.state.create_at
         }
-        this.props.createService(service,this.props.history);
+
+        this.props.createService(updatedService,this.props.history);
     }
 
     render() {
         const {errors} = this.state;
         return (
             <div className="container">
-                <h4 className="display-4 text-primary text-center">Create Service</h4>
+                <h4 className="display-4 text-primary text-center">Update Service</h4>
                 <hr/>
-                <div className="row ">
+                <div className="row">
                     <div className="col-md-8 m-auto">
-                        <form onSubmit={this.onSubmit.bind(this)}>
+                        <form onSubmit={this.onUpdate.bind(this)}>
                             <div className="form-group">
                                 <label htmlFor="servicecode">Service Code</label>
-                                <input type="text" className={classnames("form-control form-control-lg",{
-                                         "is-invalid":errors.serviceCode
-                                     })} 
-                                    placeholder="service code"
+                                <input type="text" className="form-control form-control-lg"
                                     name="serviceCode"
                                     value={this.state.serviceCode}
-                                    onChange={this.onChange}
+                                    disabled
                                 />
-                                {
-                                    errors.serviceCode && (
-                                        <div className="invalid-feedback">{errors.serviceCode}</div>
-                                    )
-                                }
                             </div>
                             <div className="form-group">
                                 <label htmlFor="servicename">Service Name</label>
                                 <input type="text" className={classnames("form-control form-control-lg",{
-                                         "is-invalid":errors.serviceName
-                                    })} 
-                                    placeholder="service name"
+                                    "is-invalid":errors.serviceName
+                                })} 
+                                    placeholder="Service Name"
                                     name="serviceName"
                                     value={this.state.serviceName}
                                     onChange={this.onChange}
@@ -79,35 +99,36 @@ class AddService extends Component {
                             </div>
                             <div className="form-row">
                                 <div className="col">
-                                     <div className="form-group">
-                                        <label htmlFor="employeenumber">No. of Employee </label>
-                                        <input type="number" className="form-control form-control-lg" placeholder="no. of emp"
+                                    <div className="form-group">
+                                        <label htmlFor="employeenumber">No. of Employee</label>
+                                        <input type="number" className="form-control form-control-lg"
                                             name="noOfEmpReq"
                                             value={this.state.noOfEmpReq}
                                             onChange={this.onChange}
                                         />
-                                     </div>
+                                    </div>
                                 </div>
-                                <div className="col">
-
-                                </div>
+                                <div className="col"></div>
                             </div>
-                            <input type="submit" value="Submit" className="btn btn-primary btn-block"/>
+                            <input type="submit" value="Update" className="btn btn-primary btn-block"/>
                         </form>
-                   </div>
+                    </div>
                 </div>
             </div>
         )
     }
 }
 
-AddService.propTypes = {
-    createService:PropTypes.func.isRequired,
-    errors:PropTypes.object.isRequired
+UpdateService.propTypes = {
+    service:PropTypes.object.isRequired,
+    getService:PropTypes.func.isRequired,
+    createService:PropTypes.func.isRequired
 }
 
-const mapStateToProps = state => ({
+const mapStateToProp = state => ({
+    service:state.service.service,
     errors:state.errors
 });
 
-export default connect(mapStateToProps,{createService})(AddService);
+
+export default connect(mapStateToProp,{getService,createService})(UpdateService);
