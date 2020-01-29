@@ -23,7 +23,7 @@ class Dashboard extends Component {
                     <EmployeeListButton/>
                 </div>
                
-               <div className="row my-4">
+               <div className="wrapper my-4">
                     {
                         services.map(service=> {
                             return(
