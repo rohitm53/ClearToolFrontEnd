@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
+import AddEmployeeButton from '../custombuttons/AddEmployeeButton'
 
 class EmployeeList extends Component {
     render() {
         return (
-            <div>
-                <h1>EmployeeList</h1>
-            </div>
+           <div className="container">
+               <AddEmployeeButton/>
+           </div>
         )
     }
 }
