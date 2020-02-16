@@ -10,6 +10,7 @@ import AddService from './components/service/AddService';
 import UpdateService from './components/service/UpdateService';
 import EmployeeList from './components/employees/EmployeeList';
 import AddEmployee from './components/employees/AddEmployee';
+import UpdateEmployee from './components/employees/UpdateEmployee';
 
 class App extends Component {
   render() {
@@ -23,6 +24,7 @@ class App extends Component {
                   <Route exact path="/updateservice/:serviceCode" component={UpdateService}/>
                   <Route exact path="/employeelist" component={EmployeeList}/>
                   <Route exact path="/addemployee" component={AddEmployee} />
+                  <Route exact path="/updateemployee" component={UpdateEmployee}/>
               </div>
             </Router>
         </Provider>

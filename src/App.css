@@ -2,9 +2,17 @@
   background: #563d7c;
 }
 
-.wrapper {
+.wrapper-2-item {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+}
+
+.wrapper-3-item {
   display: grid;
   grid-template-columns: repeat(3,1fr);
 }
 
+.employee-card-header {
+  background-color:#00688B;
+}
 
