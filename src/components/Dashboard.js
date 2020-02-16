@@ -1,50 +1,35 @@
 import React, { Component } from 'react';
-import CreatServiceButton from './custombuttons/CreatServiceButton';
-import ServiceItem from './service/ServiceItem';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {getServices} from '../actions/serviceActions';
-import EmployeeListButton from './custombuttons/EmployeeListButton';
+import { Link } from 'react-router-dom';
 
 class Dashboard extends Component {
 
-    componentDidMount(){
-        this.props.getServices();
-    }
-
     render() {
-        const services = this.props.service.services;
         return (
-           <div className="container">
-                <div className="d-inline">
-                     <CreatServiceButton/>     
+            <div className="container">
+                <div className="row">
+                    <div className="col">
+                        <Link to="/assignservice">
+                            <p className="text-primary text-justify"><b>Add Service</b></p>
+                        </Link>
+                    </div>
+                    <div className="col">
+                        <Link to="/employeelist">
+                            <p className="text-primary text-justify"><b>Add Employee</b></p>
+                        </Link>
+                    </div>
+                    <div className="col">
+                        <Link>
+                            <p className="text-primary text-justify"><b>Add Assets</b></p>
+                        </Link>
+                    </div>
+                    <div className="col">
+                        <Link>
+                            <p className="text-primary text-justify"><b>Update Contacts</b></p>
+                        </Link>
+                    </div>
                 </div>
-                <div className="d-inline ml-4">
-                    <EmployeeListButton/>
-                </div>
-               
-               <div className="wrapper-2-item my-4">
-                    {
-                        services.map(service=> {
-                            return(
-                                <ServiceItem key={service.serviceCode} service = {service}/>
-                            )
-                        })
-                    }
-               </div>
-           </div>
+            </div>
         )
     }
 }
-
-Dashboard.propTypes = {
-    getServices:PropTypes.func.isRequired,
-    service:PropTypes.object.isRequired
-}
-
-const mapStateToProp = state => ({
-    service:state.service
-})
-
-
-export default connect(mapStateToProp,{getServices})(Dashboard);
+export default Dashboard;
