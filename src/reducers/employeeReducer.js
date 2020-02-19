@@ -1,4 +1,4 @@
-import {GET_EMPLOYEES,GET_EMPLOYEE,DELETE_EMPLOYEE} from '../actions/types';
+import {GET_ALL_EMPLOYEES,GET_EMPLOYEE_BY_ID,DELETE_EMPLOYEE_BY_ID} from '../actions/types';
 
 const initialState = {
     employees:[],
@@ -8,17 +8,17 @@ export default function (state=initialState,action) {
     switch (action.type) {
         default:
                 return state;
-        case GET_EMPLOYEES:
+        case GET_ALL_EMPLOYEES:
                 return{
                     ...state,
                     employees:action.payload
                 }
-        case GET_EMPLOYEE:
+        case GET_EMPLOYEE_BY_ID:
                 return{
                     ...state,
                     employee:action.payload
                 }
-        case DELETE_EMPLOYEE : 
+        case DELETE_EMPLOYEE_BY_ID : 
                 return{
                     ...state,
                     employees:state.employees.filter(employee => employee.employeeCode!==action.payload)

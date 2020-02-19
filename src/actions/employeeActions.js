@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {GET_ERRORS,GET_EMPLOYEES,DELETE_EMPLOYEE} from './types'; 
+import {GET_ERRORS,GET_ALL_EMPLOYEES,DELETE_EMPLOYEE_BY_ID} from './types'; 
 
 export const postEmployee = (employee,history) => async dispatch => {
     try{
@@ -21,7 +21,7 @@ export const getEmployees=() => async dispatch => {
     try{
         const res = await axios.get('api/employee/all');
         dispatch({
-            type:GET_EMPLOYEES,
+            type:GET_ALL_EMPLOYEES,
             payload:res.data
         });
     }catch(err){
@@ -38,7 +38,7 @@ export const deleteEmployeeByCode =(employeeCode) => async dispatch => {
         if(window.confirm("Are you sure you want to delete this employee")){
             await axios.delete(`api/employee/${employeeCode}`);
             dispatch({
-                type:DELETE_EMPLOYEE,
+                type:DELETE_EMPLOYEE_BY_ID,
                 payload:employeeCode
             });
         }

@@ -6,12 +6,12 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import store from './store';
 import NavBar from './components/layouts/NavBar';
 import Dashboard from './components/Dashboard';
-import AddService from './components/service/AddService';
 import UpdateService from './components/service/UpdateService';
 import EmployeeList from './components/employees/EmployeeList';
 import AddEmployee from './components/employees/AddEmployee';
 import UpdateEmployee from './components/employees/UpdateEmployee';
-import AssignService from './components/service/AssignService';
+import AddService from './components/service/AddService';
+import CreateService from './components/service/CreateService';
 
 class App extends Component {
   render() {
@@ -21,12 +21,12 @@ class App extends Component {
           <div className="App">
             <NavBar />
             <Route exact path="/" component={Dashboard} />
-            <Route exact path="/addservice" component={AddService} />
+            <Route exact path="/createservice" component={CreateService} />
             <Route exact path="/updateservice/:serviceCode" component={UpdateService} />
             <Route exact path="/employeelist" component={EmployeeList} />
             <Route exact path="/addemployee" component={AddEmployee} />
             <Route exact path="/updateemployee" component={UpdateEmployee} />
-            <Route exact path="/assignservice" component={AssignService} />
+            <Route exact path="/addservice" component={AddService} />
           </div>
         </Router>
       </Provider>

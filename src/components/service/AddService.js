@@ -1,113 +1,126 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import classnames from 'classnames';
-import {createService} from "../../actions/serviceActions";
+import {getAllServices} from '../../actions/serviceActions';
+
 
 class AddService extends Component {
 
-    constructor(props) {
+    constructor(props){
         super(props);
-        this.state={
-            serviceCode:'',
-            serviceName:'',
-            noOfEmpReq:'',
-            errors:{}
+        this.state = {
+            selected_Services:[]
         }
     }
 
-    componentWillReceiveProps(nextProps){
-        if(nextProps.errors){
-            this.setState({errors:nextProps.errors});
+    componentDidMount(){
+        this.props.getAllServices();
+    }
+
+    onhandleChange = (e) => {
+        console.log("Selected checked : ",e.target.checked);
+        console.log("Selected Value : ",e.target.value);
+
+        const services = this.props.service.services;
+
+        const serviceCode = e.target.value;
+        const checkedStatus = e.target.checked;
+
+        if(checkedStatus){
+            const checked_service=services.filter(service_item => service_item.serviceCode===serviceCode);
+            this.setState({selected_Services:this.state.selected_Services.concat(checked_service)});
+        }else{
+            const checked_service = this.state.selected_Services.filter(
+                                        service_item => service_item.serviceCode!==serviceCode);
+            this.setState({selected_Services:checked_service});
         }
     }
-
-    onChange=(e)=> {
-        this.setState({[e.target.name]:e.target.value});
-    }
-
-    onSubmit=(e)=> {
-        e.preventDefault();
-        const service = {
-            serviceCode:this.state.serviceCode,
-            serviceName:this.state.serviceName,
-            noOfEmpReq:this.state.noOfEmpReq
-        }
-        this.props.createService(service,this.props.history);
-    }
-
     render() {
-        const {errors} = this.state;
+
+        const {services} = this.props.service;
+
+        const {selected_Services} = this.state;
+
+        const selected_service_section_Algorithm = (selected_Services) => {
+            if(selected_Services.length===0){
+                return(
+                    <div className="alert alert-info text-center mt-5" role="alert">
+                        Check services to add on board
+                    </div>
+                );
+            }else{
+                return(
+                    <div className="mx-5 my-3">
+                            {
+                                selected_Services.map(service => {
+                                    return(
+                                        <div className="input-group mb-1" key={service.serviceCode}>
+                                            <div className="input-group-prepend">
+                                                <div className="input-group-text">
+                                                    <input type="checkbox" checked={true}/>
+                                                </div>
+                                            </div>
+                                            <input type="text" className="form-control" value={service.serviceName} disabled />
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                );
+            }
+        }
+
+        let selected_service_section = selected_service_section_Algorithm(selected_Services);
+        
+
         return (
             <div className="container">
-                <h4 className="display-4 text-primary text-center">Create Service</h4>
-                <hr/>
-                <div className="row ">
-                    <div className="col-md-8 m-auto">
-                        <form onSubmit={this.onSubmit.bind(this)}>
-                            <div className="form-group">
-                                <label htmlFor="servicecode">Service Code</label>
-                                <input type="text" className={classnames("form-control form-control-lg",{
-                                         "is-invalid":errors.serviceCode
-                                     })} 
-                                    placeholder="service code"
-                                    name="serviceCode"
-                                    value={this.state.serviceCode}
-                                    onChange={this.onChange}
-                                />
-                                {
-                                    errors.serviceCode && (
-                                        <div className="invalid-feedback">{errors.serviceCode}</div>
+                <div className="row">
+                    <div className="col">
+                        <h4 className="display-5 text-primary text-center"><b>Add Service</b></h4>
+                        <hr/>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-sm border border-dark mr-2">
+                        <div className="mx-5 my-3">
+                            {
+                                services.map(service => {
+                                    return(
+                                        <div className="form-check mb-1" key={service.serviceCode}>
+                                             <label className="form-check-lable">
+                                                 <input type="checkbox" className="form-check-input" 
+                                                    value={service.serviceCode}
+                                                    onChange={this.onhandleChange} />  
+                                                    {service.serviceName}
+                                            </label>
+                                        </div> 
                                     )
-                                }
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="servicename">Service Name</label>
-                                <input type="text" className={classnames("form-control form-control-lg",{
-                                         "is-invalid":errors.serviceName
-                                    })} 
-                                    placeholder="service name"
-                                    name="serviceName"
-                                    value={this.state.serviceName}
-                                    onChange={this.onChange}
-                                />
-                                {
-                                    errors.serviceName && (
-                                        <div className="invalid-feedback">{errors.serviceName}</div>
-                                    )
-                                }
-                            </div>
-                            <div className="form-row">
-                                <div className="col">
-                                     <div className="form-group">
-                                        <label htmlFor="employeenumber">No. of Employee </label>
-                                        <input type="number" className="form-control form-control-lg" placeholder="no. of emp"
-                                            name="noOfEmpReq"
-                                            value={this.state.noOfEmpReq}
-                                            onChange={this.onChange}
-                                        />
-                                     </div>
-                                </div>
-                                <div className="col">
-
-                                </div>
-                            </div>
-                            <input type="submit" value="Submit" className="btn btn-primary btn-block"/>
-                        </form>
-                   </div>
+                                })
+                            }
+                        </div>
+                      
+                    </div>
+                    <div className="col-sm border border-dark">
+                        {selected_service_section}
+                    </div>
+                </div>
+                <div className="text-center mt-3">
+                     <button className="btn btn-success">Submit</button>
                 </div>
             </div>
         )
     }
 }
 
-AddService.propTypes = {
-    createService:PropTypes.func.isRequired,
-    errors:PropTypes.object.isRequired
+AddService.propTypes= {
+    service:PropTypes.object.isRequired,
+    selected_Services:PropTypes.object.isRequired,
+    getAllServices:PropTypes.func.isRequired
 }
 
-const mapStateToProps = state => ({
-    errors:state.errors
-});
+const mapStateToProp = state => ({
+    service:state.service
+})
 
-export default connect(mapStateToProps,{createService})(AddService);
+export default connect(mapStateToProp,{getAllServices})(AddService);

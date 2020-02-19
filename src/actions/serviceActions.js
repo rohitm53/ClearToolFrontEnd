@@ -1,11 +1,11 @@
 import axios from 'axios';
-import {GET_ERRORS,GET_SERVICES,GET_SERVICE, DELETE_SERVICE} from './types';
+import {GET_ERRORS,GET_ALL_SERVICES,GET_SERVICE_BY_ID,DELETE_SERVICE_BY_ID} from './types';
 
 export const createService = (service,history) => async dispatch => {
 
     try{
         await axios.post("/api/services",service);
-        history.push("/dashboard");
+        history.push("/");
         dispatch({
             type:GET_ERRORS, 
             payload:{}
@@ -18,11 +18,11 @@ export const createService = (service,history) => async dispatch => {
     }
 }
 
-export const getServices=()  => async dispatch => {
+export const getAllServices=()  => async dispatch => {
     try{
         const res = await axios.get("/api/services/all");
         dispatch({
-            type:GET_SERVICES,
+            type:GET_ALL_SERVICES,
             payload:res.data
         });
     }catch(err){
@@ -33,15 +33,15 @@ export const getServices=()  => async dispatch => {
     }
 }
 
-export const getService=(id,history) => async dispatch => {
+export const getServiceByid=(id,history) => async dispatch => {
     try{
         const res = await axios.get(`/api/services/${id}`);
         dispatch({
-            type:GET_SERVICE,
+            type:GET_SERVICE_BY_ID,
             payload:res.data
         });
     }catch(err){
-        history.push("/dashboard");
+        history.push("/");
     }
 }
 
@@ -51,7 +51,7 @@ export const deleteService = (id) => async dispatch => {
         if(window.confirm("Are you sure you want to delete this service")){
             await axios.delete(`api/services/${id}`);
             dispatch({
-                type:DELETE_SERVICE,
+                type:DELETE_SERVICE_BY_ID,
                 payload:id
             });
         }
