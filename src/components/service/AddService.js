@@ -74,7 +74,7 @@ class AddService extends Component {
         
 
         return (
-            <div className="container">
+            <div className="container smooth-scroll list-unstyled">
                 <div className="row">
                     <div className="col">
                         <h4 className="display-5 text-primary text-center"><b>Add Service</b></h4>
