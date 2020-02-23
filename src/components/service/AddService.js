@@ -1,84 +1,112 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {getAllServices} from '../../actions/serviceActions';
+import { connect } from 'react-redux';
+import { getAllServices, addCompanyService, getServiceByCompanyCode } from '../../actions/serviceActions';
 
 
 class AddService extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            selected_Services:[]
+            selected_Services: []
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.props.getAllServices();
+        this.props.getServiceByCompanyCode("WINIT");
+    }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.selected_Services) {
+            this.setState({ selected_Services: nextProps.selected_Services });
+        }
     }
 
     onhandleChange = (e) => {
-        console.log("Selected checked : ",e.target.checked);
-        console.log("Selected Value : ",e.target.value);
+        console.log("Selected checked : ", e.target.checked);
+        console.log("Selected Value : ", e.target.value);
 
         const services = this.props.service.services;
 
         const serviceCode = e.target.value;
         const checkedStatus = e.target.checked;
 
-        if(checkedStatus){
-            const checked_service=services.filter(service_item => service_item.serviceCode===serviceCode);
-            this.setState({selected_Services:this.state.selected_Services.concat(checked_service)});
-        }else{
+        if (checkedStatus) {
+            const checked_service = services.filter(service_item => service_item.serviceCode === serviceCode);
+            this.setState({ selected_Services: this.state.selected_Services.concat(checked_service) });
+        } else {
             const checked_service = this.state.selected_Services.filter(
-                                        service_item => service_item.serviceCode!==serviceCode);
-            this.setState({selected_Services:checked_service});
+                service_item => service_item.serviceCode !== serviceCode);
+            this.setState({ selected_Services: checked_service });
         }
     }
+
+    onSubmit = (e) => {
+        e.preventDefault();
+        const { selected_Services } = this.state;
+        let serviceCode = [];
+        let companyService
+        for (let i = 0; i < selected_Services.length; i++) {
+            serviceCode.push(selected_Services[i].serviceCode);
+        }
+        companyService = {
+            companyCode: "WINIT",
+            serviceCodes: serviceCode
+        }
+
+        this.props.addCompanyService(companyService, this.props.history);
+
+    }
+
+    isServiceChecked = (serviceCode) => {
+        return this.state.selected_Services.some(service => service.serviceCode === serviceCode);
+    }
+
     render() {
 
-        const {services} = this.props.service;
+        const { services } = this.props.service;
 
-        const {selected_Services} = this.state;
+        const { selected_Services } = this.state;
 
         const selected_service_section_Algorithm = (selected_Services) => {
-            if(selected_Services.length===0){
-                return(
+            if (selected_Services.length === 0) {
+                return (
                     <div className="alert alert-info text-center mt-5" role="alert">
                         Check services to add on board
                     </div>
                 );
-            }else{
-                return(
+            } else {
+                return (
                     <div className="mx-5 my-3">
-                            {
-                                selected_Services.map(service => {
-                                    return(
-                                        <div className="input-group mb-1" key={service.serviceCode}>
-                                            <div className="input-group-prepend">
-                                                <div className="input-group-text">
-                                                    <input type="checkbox" checked={true}/>
-                                                </div>
+                        {
+                            selected_Services.map(service => {
+                                return (
+                                    <div className="input-group mb-1" key={service.serviceCode}>
+                                        <div className="input-group-prepend">
+                                            <div className="input-group-text">
+                                                <input type="checkbox" checked={true} />
                                             </div>
-                                            <input type="text" className="form-control" value={service.serviceName} disabled />
                                         </div>
-                                    )
-                                })
-                            }
-                        </div>
+                                        <input type="text" className="form-control" value={service.serviceName} disabled />
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
                 );
             }
         }
 
         let selected_service_section = selected_service_section_Algorithm(selected_Services);
-        
+
 
         return (
             <div className="container smooth-scroll list-unstyled">
                 <div className="row">
                     <div className="col">
                         <h4 className="display-5 text-primary text-center"><b>Add Service</b></h4>
-                        <hr/>
+                        <hr />
                     </div>
                 </div>
                 <div className="row">
@@ -86,41 +114,47 @@ class AddService extends Component {
                         <div className="mx-5 my-3">
                             {
                                 services.map(service => {
-                                    return(
+                                    return (
                                         <div className="form-check mb-1" key={service.serviceCode}>
-                                             <label className="form-check-lable">
-                                                 <input type="checkbox" className="form-check-input" 
+                                            <label className="form-check-lable">
+                                                <input type="checkbox" className="form-check-input"
                                                     value={service.serviceCode}
-                                                    onChange={this.onhandleChange} />  
-                                                    {service.serviceName}
+                                                    checked={this.isServiceChecked(service.serviceCode)}
+                                                    onChange={this.onhandleChange} />
+                                                {service.serviceName}
                                             </label>
-                                        </div> 
+                                        </div>
                                     )
                                 })
                             }
                         </div>
-                      
+
                     </div>
                     <div className="col-sm border border-dark">
                         {selected_service_section}
                     </div>
                 </div>
                 <div className="text-center mt-3">
-                     <button className="btn btn-success">Submit</button>
+                    <button className="btn btn-success" onClick={this.onSubmit.bind(this)} >Submit</button>
                 </div>
             </div>
         )
     }
 }
 
-AddService.propTypes= {
-    service:PropTypes.object.isRequired,
-    selected_Services:PropTypes.object.isRequired,
-    getAllServices:PropTypes.func.isRequired
+AddService.propTypes = {
+    service: PropTypes.object.isRequired,
+    selected_Services: PropTypes.object.isRequired,
+    getAllServices: PropTypes.func.isRequired,
+    getServiceByCompanyCode: PropTypes.func.isRequired
 }
 
 const mapStateToProp = state => ({
-    service:state.service
+    service: state.service,
+    selected_Services: state.service.companyService
 })
 
-export default connect(mapStateToProp,{getAllServices})(AddService);
+export default connect(mapStateToProp, {
+    getAllServices, addCompanyService
+    , getServiceByCompanyCode
+})(AddService);
