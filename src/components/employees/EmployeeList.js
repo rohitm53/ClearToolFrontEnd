@@ -1,20 +1,29 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getEmployees } from '../../actions/employeeActions';
+import { getAllCompanyEmployees } from '../../actions/employeeActions';
 import AddEmployeeButton from '../custombuttons/AddEmployeeButton';
 import EmployeeItem from './EmployeeItem';
+import AssignService from '../custombuttons/AssignService';
 
 class EmployeeList extends Component {
 
     componentDidMount() {
-        this.props.getEmployees();
+        this.props.getAllCompanyEmployees("WINIT");
     }
     render() {
         const employees = this.props.employee.employees;
         return (
             <div className="container">
-                <AddEmployeeButton />
+                <div className="row">
+                    <div className="col-md-3">
+                        <AddEmployeeButton />
+                    </div>
+                    <div className="col-md-3 text-left">
+                        <AssignService />
+                    </div>
+
+                </div>
                 <div className="wrapper-2-item my-4">
                     {
                         employees.map(employee => {
@@ -27,7 +36,7 @@ class EmployeeList extends Component {
     }
 }
 EmployeeList.propTypes = {
-    getEmployees: PropTypes.func.isRequired,
+    getAllCompanyEmployees: PropTypes.func.isRequired,
     employee: PropTypes.object.isRequired
 }
 
@@ -35,4 +44,4 @@ const mapStateToProp = state => ({
     employee: state.employee
 })
 
-export default connect(mapStateToProp, { getEmployees })(EmployeeList);
+export default connect(mapStateToProp, { getAllCompanyEmployees })(EmployeeList);

@@ -7,7 +7,7 @@ class NavBar extends Component {
             <div>
                 <nav className="navbar navbar-expand-sm navbar-dark mb-4">
                     <div className="container">
-                        <Link to="/dashboard" className="navbar-brand">
+                        <Link to="/" className="navbar-brand">
                             Clean Master
                         </Link>
                         <button className="navbar-toggler" type="button" data-toggle="collapse"

@@ -1,28 +1,28 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import classnames from 'classnames';
-import {postEmployee} from '../../actions/employeeActions';
+import { postEmployee } from '../../actions/employeeActions';
 
 class AddEmployee extends Component {
 
     constructor(props) {
         super(props);
-        this.state= {
-            firstName:'',
-            lastName:'',
-            gender:'',
-            dateOfBirth:'',
-            mobile:'',
-            email:'',
-            area:'',
-            address:'',
-            errors:{}
-        }   
+        this.state = {
+            firstName: '',
+            lastName: '',
+            gender: '',
+            dateOfBirth: '',
+            mobile: '',
+            email: '',
+            area: '',
+            address: '',
+            errors: {}
+        }
     }
 
     onChange = (e) => {
-        this.setState({[e.target.name]:e.target.value});
+        this.setState({ [e.target.name]: e.target.value });
     }
 
     onSubmit = (e) => {
@@ -35,173 +35,174 @@ class AddEmployee extends Component {
             mobile: this.state.mobile,
             email: this.state.email,
             area: this.state.area,
-            address: this.state.address
-        }; 
-        console.log("Employee : ",employee );
-        this.props.postEmployee(employee,this.props.history);
+            address: this.state.address,
+            companyCode: "WINIT"
+        };
+        console.log("Employee : ", employee);
+        this.props.postEmployee(employee, this.props.history);
     }
 
-    componentWillReceiveProps(nextProps){
-        if(nextProps.errors){
-            this.setState({errors:nextProps.errors});
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.errors) {
+            this.setState({ errors: nextProps.errors });
         }
     }
 
 
     render() {
 
-        const {errors} = this.state;
+        const { errors } = this.state;
 
         return (
             <div className="container">
                 <h4 className="display-4 text-primary text-center">Add Employee</h4>
-                <hr/>
+                <hr />
                 <div className="row">
-                     <div className="col">
-                       <form onSubmit={this.onSubmit.bind(this)}>
-                           <div className="form-row">
-                              <div className="form-group col-md-6">
-                                 <label htmlFor="firstName">First Name</label>
-                                 <input type="text" 
-                                     className={classnames("form-control",{"is-invalid":errors.firstName})} 
-                                     placeholder="First Name"
-                                     name="firstName"
-                                     value={this.state.firstName}
-                                     onChange={this.onChange}
-                                 />
-                                 {
-                                     errors.firstName && (
-                                         <div className="invalid-feedback">{errors.firstName}</div>
-                                     )
-                                 }
-                              </div>
-                              <div className="form-group col-md-6">
-                                 <label htmlFor="lastName">Last Name</label>
-                                 <input type="text" 
-                                     className={classnames("form-control",{"is-invalid":errors.lastName})} 
-                                     placeholder="Last Name"
-                                     name="lastName"
-                                     value={this.state.lastName}
-                                     onChange={this.onChange}
-                                 />
-                                 {
-                                    errors.lastName && (
-                                         <div className="invalid-feedback">{errors.lastName}</div>
-                                     )
-                                 }
-                              </div>
-                           </div>
+                    <div className="col">
+                        <form onSubmit={this.onSubmit.bind(this)}>
+                            <div className="form-row">
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="firstName">First Name</label>
+                                    <input type="text"
+                                        className={classnames("form-control", { "is-invalid": errors.firstName })}
+                                        placeholder="First Name"
+                                        name="firstName"
+                                        value={this.state.firstName}
+                                        onChange={this.onChange}
+                                    />
+                                    {
+                                        errors.firstName && (
+                                            <div className="invalid-feedback">{errors.firstName}</div>
+                                        )
+                                    }
+                                </div>
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="lastName">Last Name</label>
+                                    <input type="text"
+                                        className={classnames("form-control", { "is-invalid": errors.lastName })}
+                                        placeholder="Last Name"
+                                        name="lastName"
+                                        value={this.state.lastName}
+                                        onChange={this.onChange}
+                                    />
+                                    {
+                                        errors.lastName && (
+                                            <div className="invalid-feedback">{errors.lastName}</div>
+                                        )
+                                    }
+                                </div>
+                            </div>
 
-                           <div className="form-row">
-                              <div className="form-group col-md-6">
-                                 <label htmlFor="dob">Date of Birth</label>
-                                 <input type="date" 
-                                     className={classnames("form-control",{"is-invalid":errors.dateOfBirth})} 
-                                     placeholder="Date of Birth"
-                                     name="dateOfBirth"
-                                     value={this.state.dateOfBirth}
-                                     onChange={this.onChange}
-                                 />
-                                 {
-                                    errors.dateOfBirth && (
-                                         <div className="invalid-feedback">{errors.dateOfBirth}</div>
-                                     )
-                                 }
-                              </div>
-                              <div className="form-group col-md-6 mt-4 pt-3">
-                              <label htmlFor="gender" className="mr-3">Gender</label>
-                                   <div className="form-check form-check-inline">
-                                       <input className="form-check-input" type="radio" name="gender" id="male" value="male"
-                                           checked={this.state.gender==='male'}
-                                           onChange={this.onChange}
-                                       />
-                                       <label className="form-check-label">Male</label>
-                                   </div> 
-                                   <div className="form-check form-check-inline mr-5">
-                                       <input className="form-check-input" type="radio" name="gender" id="female" value="female"
-                                           checked={this.state.gender==='female'}
-                                           onChange={this.onChange}
-                                       />
-                                       <label className="form-check-label">Female</label>
-                                   </div> 
-                                   {
-                                    errors.gender && (
-                                         <div className="invalid-feedback">{errors.gender}</div>
-                                     )
-                                   }   
-                              </div>
-                           </div>
-                           
-                           <div className="form-row">
-                              <div className="form-group col-md-6">
-                                 <label htmlFor="mobile">Mobile</label>
-                                 <input type="number" 
-                                     className={classnames("form-control",{"is-invalid":errors.mobile})} 
-                                     placeholder="Mobile" maxLength="10"
-                                     name="mobile"
-                                     value={this.state.mobile}
-                                     onChange={this.onChange}
-                                 />
-                                {
-                                    errors.mobile && (
-                                         <div className="invalid-feedback">{errors.mobile}</div>
-                                     )
-                                }
-                              </div>
-                              <div className="form-group col-md-6">
-                                 <label htmlFor="email">Email</label>
-                                 <input type="text" 
-                                     className={classnames("form-control",{"is-invalid":errors.email})} 
-                                     placeholder="Email" 
-                                     name="email"
-                                     value={this.state.email}
-                                     onChange={this.onChange}
-                                 />
-                                {
-                                    errors.email && (
-                                         <div className="invalid-feedback">{errors.email}</div>
-                                     )
-                                }
-                              </div>
-                           </div>
+                            <div className="form-row">
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="dob">Date of Birth</label>
+                                    <input type="date"
+                                        className={classnames("form-control", { "is-invalid": errors.dateOfBirth })}
+                                        placeholder="Date of Birth"
+                                        name="dateOfBirth"
+                                        value={this.state.dateOfBirth}
+                                        onChange={this.onChange}
+                                    />
+                                    {
+                                        errors.dateOfBirth && (
+                                            <div className="invalid-feedback">{errors.dateOfBirth}</div>
+                                        )
+                                    }
+                                </div>
+                                <div className="form-group col-md-6 mt-4 pt-3">
+                                    <label htmlFor="gender" className="mr-3">Gender</label>
+                                    <div className="form-check form-check-inline">
+                                        <input className="form-check-input" type="radio" name="gender" id="male" value="male"
+                                            checked={this.state.gender === 'male'}
+                                            onChange={this.onChange}
+                                        />
+                                        <label className="form-check-label">Male</label>
+                                    </div>
+                                    <div className="form-check form-check-inline mr-5">
+                                        <input className="form-check-input" type="radio" name="gender" id="female" value="female"
+                                            checked={this.state.gender === 'female'}
+                                            onChange={this.onChange}
+                                        />
+                                        <label className="form-check-label">Female</label>
+                                    </div>
+                                    {
+                                        errors.gender && (
+                                            <div className="invalid-feedback">{errors.gender}</div>
+                                        )
+                                    }
+                                </div>
+                            </div>
 
-                           <div className="form-row">
+                            <div className="form-row">
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="mobile">Mobile</label>
+                                    <input type="number"
+                                        className={classnames("form-control", { "is-invalid": errors.mobile })}
+                                        placeholder="Mobile" maxLength="10"
+                                        name="mobile"
+                                        value={this.state.mobile}
+                                        onChange={this.onChange}
+                                    />
+                                    {
+                                        errors.mobile && (
+                                            <div className="invalid-feedback">{errors.mobile}</div>
+                                        )
+                                    }
+                                </div>
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="email">Email</label>
+                                    <input type="text"
+                                        className={classnames("form-control", { "is-invalid": errors.email })}
+                                        placeholder="Email"
+                                        name="email"
+                                        value={this.state.email}
+                                        onChange={this.onChange}
+                                    />
+                                    {
+                                        errors.email && (
+                                            <div className="invalid-feedback">{errors.email}</div>
+                                        )
+                                    }
+                                </div>
+                            </div>
+
+                            <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label htmlFor="address">Address</label>
-                                    <textarea type="text" 
-                                         className={classnames("form-control",{"is-invalid":errors.address})} 
-                                         placeholder="Address" 
-                                         name="address"
-                                         value={this.state.address}
-                                         onChange={this.onChange}
+                                    <textarea type="text"
+                                        className={classnames("form-control", { "is-invalid": errors.address })}
+                                        placeholder="Address"
+                                        name="address"
+                                        value={this.state.address}
+                                        onChange={this.onChange}
                                     ></textarea>
                                     {
-                                         errors.email && (
-                                         <div className="invalid-feedback">{errors.address}</div>
-                                     )
-                                  }
+                                        errors.email && (
+                                            <div className="invalid-feedback">{errors.address}</div>
+                                        )
+                                    }
                                 </div>
                                 <div className="form-group col-md-6">
                                     <label htmlFor="area">Area</label>
-                                    <input type="text" 
-                                         className={classnames("form-control",{"is-invalid":errors.area})}
-                                         placeholder="Area"
-                                         name="area"
-                                         value={this.state.area}
-                                         onChange={this.onChange}
+                                    <input type="text"
+                                        className={classnames("form-control", { "is-invalid": errors.area })}
+                                        placeholder="Area"
+                                        name="area"
+                                        value={this.state.area}
+                                        onChange={this.onChange}
                                     />
-                                     {
-                                         errors.area && (
-                                         <div className="invalid-feedback">{errors.area}</div>
+                                    {
+                                        errors.area && (
+                                            <div className="invalid-feedback">{errors.area}</div>
                                         )
-                                     }
-                               </div>
-                           </div>
+                                    }
+                                </div>
+                            </div>
 
-                        <input type="submit" value="submit" className="btn btn-primary"/>
+                            <input type="submit" value="submit" className="btn btn-primary" />
 
-                       </form>
-                     </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         )
@@ -209,12 +210,12 @@ class AddEmployee extends Component {
 }
 
 AddEmployee.propTypes = {
-    errors:PropTypes.object.isRequired,
-    postEmployee:PropTypes.func.isRequired
+    errors: PropTypes.object.isRequired,
+    postEmployee: PropTypes.func.isRequired
 }
 
 const mapPropToState = (state) => ({
-    errors:state.errors
+    errors: state.errors
 });
 
-export default connect(mapPropToState,{postEmployee})(AddEmployee);
+export default connect(mapPropToState, { postEmployee })(AddEmployee);

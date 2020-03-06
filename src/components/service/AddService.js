@@ -9,7 +9,7 @@ class AddService extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selected_Services: []
+            companyService: []
         }
     }
 
@@ -18,8 +18,8 @@ class AddService extends Component {
         this.props.getServiceByCompanyCode("WINIT");
     }
     componentWillReceiveProps(nextProps) {
-        if (nextProps.selected_Services) {
-            this.setState({ selected_Services: nextProps.selected_Services });
+        if (nextProps.companyService) {
+            this.setState({ companyService: nextProps.companyService });
         }
     }
 
@@ -34,43 +34,43 @@ class AddService extends Component {
 
         if (checkedStatus) {
             const checked_service = services.filter(service_item => service_item.serviceCode === serviceCode);
-            this.setState({ selected_Services: this.state.selected_Services.concat(checked_service) });
+            this.setState({ companyService: this.state.companyService.concat(checked_service) });
         } else {
-            const checked_service = this.state.selected_Services.filter(
+            const checked_service = this.state.companyService.filter(
                 service_item => service_item.serviceCode !== serviceCode);
-            this.setState({ selected_Services: checked_service });
+            this.setState({ companyService: checked_service });
         }
     }
 
     onSubmit = (e) => {
         e.preventDefault();
-        const { selected_Services } = this.state;
+        const { companyService } = this.state;
         let serviceCode = [];
-        let companyService
-        for (let i = 0; i < selected_Services.length; i++) {
-            serviceCode.push(selected_Services[i].serviceCode);
+        let companyServiceReq
+        for (let i = 0; i < companyService.length; i++) {
+            serviceCode.push(companyService[i].serviceCode);
         }
-        companyService = {
+        companyServiceReq = {
             companyCode: "WINIT",
             serviceCodes: serviceCode
         }
 
-        this.props.addCompanyService(companyService, this.props.history);
+        this.props.addCompanyService(companyServiceReq, this.props.history);
 
     }
 
     isServiceChecked = (serviceCode) => {
-        return this.state.selected_Services.some(service => service.serviceCode === serviceCode);
+        return this.state.companyService.some(service => service.serviceCode === serviceCode);
     }
 
     render() {
 
         const { services } = this.props.service;
 
-        const { selected_Services } = this.state;
+        const { companyService } = this.state;
 
-        const selected_service_section_Algorithm = (selected_Services) => {
-            if (selected_Services.length === 0) {
+        const selected_service_section_Algorithm = (companyService) => {
+            if (companyService.length === 0) {
                 return (
                     <div className="alert alert-info text-center mt-5" role="alert">
                         Check services to add on board
@@ -80,7 +80,7 @@ class AddService extends Component {
                 return (
                     <div className="mx-5 my-3">
                         {
-                            selected_Services.map(service => {
+                            companyService.map(service => {
                                 return (
                                     <div className="input-group mb-1" key={service.serviceCode}>
                                         <div className="input-group-prepend">
@@ -98,7 +98,7 @@ class AddService extends Component {
             }
         }
 
-        let selected_service_section = selected_service_section_Algorithm(selected_Services);
+        let selected_service_section = selected_service_section_Algorithm(companyService);
 
 
         return (
@@ -144,14 +144,14 @@ class AddService extends Component {
 
 AddService.propTypes = {
     service: PropTypes.object.isRequired,
-    selected_Services: PropTypes.object.isRequired,
+    companyService: PropTypes.object.isRequired,
     getAllServices: PropTypes.func.isRequired,
     getServiceByCompanyCode: PropTypes.func.isRequired
 }
 
 const mapStateToProp = state => ({
     service: state.service,
-    selected_Services: state.service.companyService
+    companyService: state.service.companyService
 })
 
 export default connect(mapStateToProp, {

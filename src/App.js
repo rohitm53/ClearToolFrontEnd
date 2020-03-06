@@ -12,6 +12,7 @@ import AddEmployee from './components/employees/AddEmployee';
 import UpdateEmployee from './components/employees/UpdateEmployee';
 import AddService from './components/service/AddService';
 import CreateService from './components/service/CreateService';
+import MapServiceToEmployee from './components/employees/MapServiceToEmployee';
 
 class App extends Component {
   render() {
@@ -27,6 +28,7 @@ class App extends Component {
             <Route exact path="/addemployee" component={AddEmployee} />
             <Route exact path="/updateemployee" component={UpdateEmployee} />
             <Route exact path="/addservice" component={AddService} />
+            <Route exact path="/assignservice" component={MapServiceToEmployee} />
           </div>
         </Router>
       </Provider>
