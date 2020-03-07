@@ -1,5 +1,8 @@
 import axios from 'axios';
-import { GET_ERRORS, GET_ALL_EMPLOYEES, GET_ALL_COMPANY_EMPLOYEE, DELETE_EMPLOYEE_BY_ID, GET_EMPLOYEE_SERVICE_BY_COMPANY_CODE } from './types';
+import {
+    GET_ERRORS, GET_ALL_EMPLOYEES, GET_ALL_COMPANY_EMPLOYEE,
+    DELETE_EMPLOYEE_BY_ID, GET_EMPLOYEE_SERVICE_BY_COMPANY_CODE
+} from './types';
 
 export const postEmployee = (employee, history) => async dispatch => {
     try {
@@ -77,6 +80,29 @@ export const getEmployeeServicebyCompany = (companyCode) => async dispatch => {
     } catch (err) {
         dispatch({
             type: GET_ERRORS,
+            payload: err.response.data
+        });
+    }
+}
+
+export const postEmployeeService = (employeeServiceRequest, history) => async dispatch => {
+
+    try {
+        console.log("FInal Object : ", JSON.stringify(employeeServiceRequest));
+
+        await axios.post("/api/employeeservice", employeeServiceRequest);
+        dispatch({
+            type: GET_EMPLOYEE_SERVICE_BY_COMPANY_CODE,
+            payload: []
+        });
+        history.push("/employeelist");
+        dispatch({
+            type: GET_ERRORS,
+            payload: {}
+        });
+    } catch (err) {
+        dispatch({
+            action: GET_ERRORS,
             payload: err.response.data
         });
     }

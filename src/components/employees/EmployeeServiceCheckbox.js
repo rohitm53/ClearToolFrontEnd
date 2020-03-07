@@ -4,7 +4,7 @@ class EmployeeServiceCheckbox extends Component {
     render() {
         const { companyService } = this.props;
         return (
-            <div className="wrapper-2-item">
+            <div className="wrapper-3-item">
                 {
                     companyService.map(service => {
                         return (
@@ -13,6 +13,7 @@ class EmployeeServiceCheckbox extends Component {
                                     <input type="checkbox" className="form-check-input"
                                         value={service.serviceCode}
                                         onChange={(e) => this.props.onServiceChecked(e, this.props.employeeCode)}
+                                        checked={this.props.isServiceChecked(this.props.employeeCode, service.serviceCode)}
                                     />
                                     {service.serviceName}
                                 </label>

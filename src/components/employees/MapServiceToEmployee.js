@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getAllCompanyEmployees, getEmployeeServicebyCompany } from '../../actions/employeeActions';
+import {
+    getAllCompanyEmployees, getEmployeeServicebyCompany,
+    postEmployeeService
+} from '../../actions/employeeActions';
 import { getServiceByCompanyCode } from '../../actions/serviceActions';
 import EmployeeServiceCheckbox from './EmployeeServiceCheckbox';
+import hashmap from 'hashmap';
+
 
 class MapServiceToEmployee extends Component {
 
@@ -13,7 +18,7 @@ class MapServiceToEmployee extends Component {
             employees: [],
             employeeService: [],
             companyService: [],
-            employeeSerrvice: []
+            hmEmployeeService: new hashmap()
         }
     }
 
@@ -30,12 +35,78 @@ class MapServiceToEmployee extends Component {
         if (nextProps.companyService) {
             this.setState({ companyService: nextProps.companyService });
         }
+        if (nextProps.employeeService) {
+            const { employeeService } = nextProps;
+            if (employeeService.length > 0) {
+                var hmEmployeeService = new hashmap();
+                for (let i = 0; i < employeeService.length; i++) {
+                    hmEmployeeService.set(employeeService[i].employeeCode, employeeService[i].serviceCodes);
+                }
+                this.setState({ hmEmployeeService: hmEmployeeService });
+            }
+        }
     }
 
     onServiceChecked = (e, employeeCode) => {
-        console.log("Selected Service : ", e.target.value);
-        console.log("Selected Checked : ", e.target.checked);
-        console.log("Selected Employee : ", employeeCode);
+        const { hmEmployeeService } = this.state;
+        let serviceCode = e.target.value;
+        let checkedStatus = e.target.checked;
+        if (hmEmployeeService.has(employeeCode)) {
+            var arrServiceCode = [];
+            arrServiceCode = hmEmployeeService.get(employeeCode);
+            if (checkedStatus) {
+                arrServiceCode.push(serviceCode);
+                hmEmployeeService.set(employeeCode, arrServiceCode);
+            } else {
+                var arrServiceCode = arrServiceCode.filter(item => item !== serviceCode);
+                hmEmployeeService.set(employeeCode, arrServiceCode);
+            }
+        } else {
+            if (checkedStatus) {
+                var arrServiceCode = [];
+                arrServiceCode.push(serviceCode);
+                hmEmployeeService.set(employeeCode, arrServiceCode);
+            } else {
+
+            }
+        }
+        this.setState({ hmEmployeeService: hmEmployeeService });
+    }
+
+
+    isServiceChecked = (employeeCode, serviceCode) => {
+
+        const { hmEmployeeService } = this.state;
+        if (hmEmployeeService.has(employeeCode)) {
+            return hmEmployeeService.get(employeeCode).some(item => item === serviceCode);
+        } else {
+            return false;
+        }
+    }
+
+    onSubmit = (e) => {
+        e.preventDefault();
+        const { hmEmployeeService } = this.state;
+        let employeeServiceRequest = {};
+        let employeeServices = [];
+        for (let key of hmEmployeeService.keys()) {
+            var arrServiceCodes = [];
+            arrServiceCodes = hmEmployeeService.get(key);
+            if (arrServiceCodes.length !== 0) {
+                var employeeService = {
+                    employeeCode: key,
+                    serviceCodes: arrServiceCodes
+                };
+                employeeServices.push(employeeService);
+            }
+        }
+        employeeServiceRequest = {
+            employeeServices,
+            companyCode: "WINIT"
+        }
+        console.log("Final Object : ", employeeServiceRequest);
+        this.props.postEmployeeService(employeeServiceRequest, this.props.history);
+
     }
 
     render() {
@@ -69,6 +140,7 @@ class MapServiceToEmployee extends Component {
                                                     employeeCode={employee.employeeCode}
                                                     companyService={companyService}
                                                     onServiceChecked={this.onServiceChecked}
+                                                    isServiceChecked={this.isServiceChecked}
                                                 />
 
                                             </td>
@@ -79,7 +151,7 @@ class MapServiceToEmployee extends Component {
                     </table>
                 </div>
                 <div className="text-center my-3 ">
-                    <button className="btn btn-success">Submit</button>
+                    <button className="btn btn-success" onClick={this.onSubmit.bind(this)} >Submit</button>
                 </div>
             </div>
         )
@@ -90,7 +162,8 @@ MapServiceToEmployee.propType = {
     employees: PropTypes.array.isRequired,
     getAllCompanyEmployees: PropTypes.func.isRequired,
     getEmployeeServicebyCompany: PropTypes.func.isRequired,
-    company_selected_service: PropTypes.array.isRequired
+    company_selected_service: PropTypes.array.isRequired,
+    postEmployeeService: PropTypes.func.isRequired
 }
 
 const mapStateToProp = state => ({
@@ -101,5 +174,5 @@ const mapStateToProp = state => ({
 
 export default connect(mapStateToProp, {
     getAllCompanyEmployees, getEmployeeServicebyCompany,
-    getServiceByCompanyCode
+    getServiceByCompanyCode, postEmployeeService
 })(MapServiceToEmployee);

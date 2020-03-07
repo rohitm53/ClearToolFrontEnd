@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {deleteEmployeeByCode} from '../../actions/employeeActions';
+import { connect } from 'react-redux';
+import { deleteEmployeeByCode } from '../../actions/employeeActions';
 
 class EmployeeItem extends Component {
-    
+
     onEmployeeDelete = (employeeCode) => {
         this.props.deleteEmployeeByCode(employeeCode);
     }
 
     render() {
-        const {employee} = this.props;
+        const { employee } = this.props;
         return (
             <div className="container mb-3">
                 <div className="card">
@@ -20,17 +20,14 @@ class EmployeeItem extends Component {
                     </div>
                     <div className="card-body">
                         <div className="row">
-                            <div className="col-6">
+                            <div className="col-md-6">
                                 <h4 className="card-title">{employee.area}</h4>
                                 <p className="card-text">{employee.mobile}</p>
                             </div>
-                            <div className="col-2">
-                                <Link className="btn btn-success">Assign</Link>
-                            </div>
-                            <div className="col-4">
+                            <div className="col-md-4">
                                 <Link to="/updateemployee" className="btn btn-info mb-2">Update Details</Link>
-                                <button className="btn btn-danger" onClick={this.onEmployeeDelete.bind(this,employee.employeeCode)}>
-                                        Delete
+                                <button className="btn btn-danger" onClick={this.onEmployeeDelete.bind(this, employee.employeeCode)}>
+                                    Delete
                                 </button>
                             </div>
                         </div>
@@ -41,7 +38,7 @@ class EmployeeItem extends Component {
     }
 }
 
-EmployeeItem.propTypes =  {
-    deleteEmployeeByCode:PropTypes.func.isRequired
+EmployeeItem.propTypes = {
+    deleteEmployeeByCode: PropTypes.func.isRequired
 }
-export default connect(null,{deleteEmployeeByCode})(EmployeeItem);
+export default connect(null, { deleteEmployeeByCode })(EmployeeItem);

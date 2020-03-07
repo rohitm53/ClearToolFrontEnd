@@ -134,7 +134,7 @@ class AddService extends Component {
                         {selected_service_section}
                     </div>
                 </div>
-                <div className="text-center mt-3">
+                <div className="text-center my-3">
                     <button className="btn btn-success" onClick={this.onSubmit.bind(this)} >Submit</button>
                 </div>
             </div>
