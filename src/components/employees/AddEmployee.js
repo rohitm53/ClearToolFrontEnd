@@ -10,6 +10,7 @@ class AddEmployee extends Component {
         super(props);
         this.state = {
             firstName: '',
+            middleName: '',
             lastName: '',
             gender: '',
             dateOfBirth: '',
@@ -17,6 +18,10 @@ class AddEmployee extends Component {
             email: '',
             area: '',
             address: '',
+            city: '',
+            country: '',
+            pinCode: '',
+            companyCode: '',
             errors: {}
         }
     }
@@ -29,6 +34,7 @@ class AddEmployee extends Component {
         e.preventDefault();
         const employee = {
             firstName: this.state.firstName,
+            middleName: this.state.middleName,
             lastName: this.state.lastName,
             gender: this.state.gender,
             dateOfBirth: this.state.dateOfBirth,
@@ -36,6 +42,9 @@ class AddEmployee extends Component {
             email: this.state.email,
             area: this.state.area,
             address: this.state.address,
+            city: this.state.city,
+            country: this.state.country,
+            pinCode: this.state.pinCode,
             companyCode: "WINIT"
         };
         console.log("Employee : ", employee);
@@ -61,8 +70,8 @@ class AddEmployee extends Component {
                     <div className="col">
                         <form onSubmit={this.onSubmit.bind(this)}>
                             <div className="form-row">
-                                <div className="form-group col-md-6">
-                                    <label htmlFor="firstName">First Name</label>
+                                <div className="form-group col-md-4">
+                                    <label htmlFor="firstName">First Name *</label>
                                     <input type="text"
                                         className={classnames("form-control", { "is-invalid": errors.firstName })}
                                         placeholder="First Name"
@@ -76,8 +85,23 @@ class AddEmployee extends Component {
                                         )
                                     }
                                 </div>
-                                <div className="form-group col-md-6">
-                                    <label htmlFor="lastName">Last Name</label>
+                                <div className="form-group col-md-4">
+                                    <label htmlFor="middlename">Middle Name</label>
+                                    <input type="text"
+                                        className={classnames("form-control", { "is-invalid": errors.middleName })}
+                                        placeholder="Middle Name"
+                                        name="middleName"
+                                        value={this.state.middleName}
+                                        onChange={this.onChange}
+                                    />
+                                    {
+                                        errors.middleName && (
+                                            <div className="invalid-feedback">{errors.middleName}</div>
+                                        )
+                                    }
+                                </div>
+                                <div className="form-group col-md-4">
+                                    <label htmlFor="lastName">Last Name *</label>
                                     <input type="text"
                                         className={classnames("form-control", { "is-invalid": errors.lastName })}
                                         placeholder="Last Name"
@@ -110,7 +134,7 @@ class AddEmployee extends Component {
                                     }
                                 </div>
                                 <div className="form-group col-md-6 mt-4 pt-3">
-                                    <label htmlFor="gender" className="mr-3">Gender</label>
+                                    <label htmlFor="gender" className="mr-3">Gender * </label>
                                     <div className="form-check form-check-inline">
                                         <input className="form-check-input" type="radio" name="gender" id="male" value="male"
                                             checked={this.state.gender === 'male'}
@@ -135,7 +159,7 @@ class AddEmployee extends Component {
 
                             <div className="form-row">
                                 <div className="form-group col-md-6">
-                                    <label htmlFor="mobile">Mobile</label>
+                                    <label htmlFor="mobile">Mobile *</label>
                                     <input type="number"
                                         className={classnames("form-control", { "is-invalid": errors.mobile })}
                                         placeholder="Mobile" maxLength="10"
@@ -150,7 +174,7 @@ class AddEmployee extends Component {
                                     }
                                 </div>
                                 <div className="form-group col-md-6">
-                                    <label htmlFor="email">Email</label>
+                                    <label htmlFor="email">Email *</label>
                                     <input type="text"
                                         className={classnames("form-control", { "is-invalid": errors.email })}
                                         placeholder="Email"
@@ -167,8 +191,8 @@ class AddEmployee extends Component {
                             </div>
 
                             <div className="form-row">
-                                <div className="form-group col-md-6">
-                                    <label htmlFor="address">Address</label>
+                                <div className="form-group col-md-4">
+                                    <label htmlFor="address">Address *</label>
                                     <textarea type="text"
                                         className={classnames("form-control", { "is-invalid": errors.address })}
                                         placeholder="Address"
@@ -182,8 +206,8 @@ class AddEmployee extends Component {
                                         )
                                     }
                                 </div>
-                                <div className="form-group col-md-6">
-                                    <label htmlFor="area">Area</label>
+                                <div className="form-group col-md-4">
+                                    <label htmlFor="area">Area *</label>
                                     <input type="text"
                                         className={classnames("form-control", { "is-invalid": errors.area })}
                                         placeholder="Area"
@@ -197,10 +221,58 @@ class AddEmployee extends Component {
                                         )
                                     }
                                 </div>
+                                <div className="form-group col-md-4">
+                                    <label htmlFor="city">City *</label>
+                                    <input type="text"
+                                        className={classnames("form-control", { "is-invalid": errors.city })}
+                                        placeholder="City"
+                                        name="city"
+                                        value={this.state.city}
+                                        onChange={this.onChange}
+                                    />
+                                    {
+                                        errors.city && (
+                                            <div className="invalid-feedback">{errors.city}</div>
+                                        )
+                                    }
+                                </div>
                             </div>
 
-                            <input type="submit" value="submit" className="btn btn-primary" />
-
+                            <div className="form-row">
+                                <div className="form-group col-md-4">
+                                    <label htmlFor="country">Country *</label>
+                                    <input type="text"
+                                        className={classnames("form-control", { "is-invalid": errors.country })}
+                                        placeholder="City"
+                                        name="country"
+                                        value={this.state.country}
+                                        onChange={this.onChange}
+                                    />
+                                    {
+                                        errors.country && (
+                                            <div className="invalid-feedback">{errors.country}</div>
+                                        )
+                                    }
+                                </div>
+                                <div className="form-group col-md-4">
+                                    <label htmlFor="pinCode">Pincode *</label>
+                                    <input type="text"
+                                        className={classnames("form-control", { "is-invalid": errors.pinCode })}
+                                        placeholder="Pincode"
+                                        name="pinCode"
+                                        value={this.state.pinCode}
+                                        onChange={this.onChange}
+                                    />
+                                    {
+                                        errors.pinCode && (
+                                            <div className="invalid-feedback">{errors.pinCode}</div>
+                                        )
+                                    }
+                                </div>
+                                <div className="form-group col-md-4 text-center">
+                                    <input type="submit" value="Submit" className="btn btn-primary mt-4 mb-3" />
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
