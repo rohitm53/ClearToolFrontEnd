@@ -13,6 +13,9 @@ import UpdateEmployee from './components/employees/UpdateEmployee';
 import AddService from './components/service/AddService';
 import CreateService from './components/service/CreateService';
 import MapServiceToEmployee from './components/employees/MapServiceToEmployee';
+import CreateAsset from './components/asset/CreateAsset';
+import AssetList from './components/asset/AssetList';
+import UpdateAsset from './components/asset/UpdateAsset';
 
 class App extends Component {
   render() {
@@ -29,6 +32,9 @@ class App extends Component {
             <Route exact path="/updateemployee" component={UpdateEmployee} />
             <Route exact path="/addservice" component={AddService} />
             <Route exact path="/assignservice" component={MapServiceToEmployee} />
+            <Route exact path="/assetlist" component={AssetList} />
+            <Route exact path="/createasset" component={CreateAsset} />
+            <Route exact path="/updateasset/:assetcode" component={UpdateAsset} />
           </div>
         </Router>
       </Provider>

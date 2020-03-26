@@ -18,7 +18,7 @@ class Dashboard extends Component {
                         </Link>
                     </div>
                     <div className="col-md-3">
-                        <Link>
+                        <Link to="/assetlist">
                             <p className="text-primary text-justify"><b>Add Assets</b></p>
                         </Link>
                     </div>

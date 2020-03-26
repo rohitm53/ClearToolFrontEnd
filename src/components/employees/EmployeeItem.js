@@ -9,7 +9,6 @@ class EmployeeItem extends Component {
     onEmployeeDelete = (employeeCode) => {
         this.props.deleteEmployeeByCode(employeeCode);
     }
-
     render() {
         const { employee } = this.props;
         return (
