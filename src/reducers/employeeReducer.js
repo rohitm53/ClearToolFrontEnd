@@ -1,4 +1,7 @@
-import { GET_ALL_COMPANY_EMPLOYEE, GET_EMPLOYEE_BY_ID, DELETE_EMPLOYEE_BY_ID, GET_EMPLOYEE_SERVICE_BY_COMPANY_CODE } from '../actions/types';
+import {
+    GET_ALL_COMPANY_EMPLOYEE, GET_EMPLOYEE_BY_EMPLOYEE_CODE, DELETE_EMPLOYEE_BY_ID,
+    GET_EMPLOYEE_SERVICE_BY_COMPANY_CODE
+} from '../actions/types';
 
 const initialState = {
     employees: [],
@@ -14,7 +17,7 @@ export default function (state = initialState, action) {
                 ...state,
                 employees: action.payload
             }
-        case GET_EMPLOYEE_BY_ID:
+        case GET_EMPLOYEE_BY_EMPLOYEE_CODE:
             return {
                 ...state,
                 employee: action.payload

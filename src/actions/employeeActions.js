@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {
-    GET_ERRORS, GET_ALL_EMPLOYEES, GET_ALL_COMPANY_EMPLOYEE,
+    GET_ERRORS, GET_ALL_EMPLOYEES, GET_ALL_COMPANY_EMPLOYEE, GET_EMPLOYEE_BY_EMPLOYEE_CODE,
     DELETE_EMPLOYEE_BY_ID, GET_EMPLOYEE_SERVICE_BY_COMPANY_CODE
 } from './types';
 
@@ -48,6 +48,25 @@ export const getAllCompanyEmployees = (companyCode) => async dispatch => {
             payload: err.response.data
         });
     }
+}
+
+export const getEmployeeByEmployeeCode = (employeeCode) => async dispatch => {
+
+    try {
+
+        const res = await axios.get(`/api/employee/${employeeCode}`);
+        dispatch({
+            type: GET_EMPLOYEE_BY_EMPLOYEE_CODE,
+            payload: res.data
+        });
+
+    } catch (err) {
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        });
+    }
+
 }
 
 export const deleteEmployeeByCode = (employeeCode) => async dispatch => {

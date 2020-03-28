@@ -29,7 +29,7 @@ class App extends Component {
             <Route exact path="/updateservice/:serviceCode" component={UpdateService} />
             <Route exact path="/employeelist" component={EmployeeList} />
             <Route exact path="/addemployee" component={AddEmployee} />
-            <Route exact path="/updateemployee" component={UpdateEmployee} />
+            <Route exact path="/updateemployee/:employeecode" component={UpdateEmployee} />
             <Route exact path="/addservice" component={AddService} />
             <Route exact path="/assignservice" component={MapServiceToEmployee} />
             <Route exact path="/assetlist" component={AssetList} />

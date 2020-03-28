@@ -24,7 +24,7 @@ class EmployeeItem extends Component {
                                 <p className="card-text">{employee.mobile}</p>
                             </div>
                             <div className="col-md-4">
-                                <Link to="/updateemployee" className="btn btn-info mb-2">Update Details</Link>
+                                <Link to={`/updateemployee/${employee.employeeCode}`} className="btn btn-info mb-2">Update Details</Link>
                                 <button className="btn btn-danger" onClick={this.onEmployeeDelete.bind(this, employee.employeeCode)}>
                                     Delete
                                 </button>

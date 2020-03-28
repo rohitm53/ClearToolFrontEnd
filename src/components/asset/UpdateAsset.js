@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getAssetByAssetCode, postAsset } from '../../actions/assetActions';
+import classnames from 'classnames';
 
 
 
@@ -15,7 +16,7 @@ class UpdateAsset extends Component {
             name: '',
             quantity: '',
             companyCode: '',
-            error: {}
+            errors: {}
         }
     }
 
@@ -41,6 +42,11 @@ class UpdateAsset extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+
+        if (nextProps.errors) {
+            this.setState({ errors: nextProps.errors });
+        }
+
         const { id, code, name, companyCode, quantity } = nextProps.asset;
         this.setState({
             id,
@@ -53,6 +59,8 @@ class UpdateAsset extends Component {
     }
 
     render() {
+
+        const { errors } = this.state;
         return (
             <div className="container">
                 <h4 className="display-4 text-center text-primary">Update Asset</h4>
@@ -70,11 +78,17 @@ class UpdateAsset extends Component {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="name">Asset Name</label>
-                                <input type="text" className="form-control form-control-lg"
+                                <input type="text" className={classnames("form-control form-control-lg",
+                                    { "is-invalid": errors.name })}
                                     name="name"
                                     value={this.state.name}
                                     onChange={this.onChange}
                                 />
+                                {
+                                    errors.name && (
+                                        <div className="invalid-feedback">{errors.name}</div>
+                                    )
+                                }
                             </div>
                             <div className="form-row">
                                 <div className="col">
@@ -103,12 +117,13 @@ class UpdateAsset extends Component {
 UpdateAsset.propType = {
     getAssetByAssetCode: PropTypes.func.isRequired,
     postAsset: PropTypes.func.isRequired,
-    asset: PropTypes.object.isRequired
+    asset: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
 }
 
 const mapStateToProp = state => ({
     asset: state.asset.asset,
-    error: state.error
+    errors: state.errors
 })
 
 
