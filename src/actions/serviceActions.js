@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {
     GET_ERRORS, GET_ALL_SERVICES, GET_SERVICE_BY_ID, DELETE_SERVICE_BY_ID,
-    GET_COMPANY_SERVICE_BY_COMPANY_CODE
+
 } from './types';
 
 export const createService = (service, history) => async dispatch => {
@@ -58,40 +58,6 @@ export const deleteService = (id) => async dispatch => {
                 payload: id
             });
         }
-    } catch (err) {
-        dispatch({
-            type: GET_ERRORS,
-            payload: err.response.data
-        });
-    }
-
-}
-
-export const addCompanyService = (companyService, history) => async dispatch => {
-
-    try {
-        await axios.post("/api/companyservice", companyService)
-        history.push("/");
-        dispatch({
-            type: GET_ERRORS,
-            payload: {}
-        });
-    } catch (err) {
-        dispatch({
-            type: GET_ERRORS,
-            payload: err.response.data
-        });
-    }
-}
-
-export const getServiceByCompanyCode = (companyCode) => async dispatch => {
-
-    try {
-        const res = await axios.get(`/api/companyservice/${companyCode}`);
-        dispatch({
-            type: GET_COMPANY_SERVICE_BY_COMPANY_CODE,
-            payload: res.data
-        });
     } catch (err) {
         dispatch({
             type: GET_ERRORS,

@@ -5,8 +5,8 @@ import {
 
 const initialState = {
     services: [],
-    service: {},
-    companyService: []
+    service: {}
+
 }
 
 export default function (state = initialState, action) {
@@ -28,10 +28,6 @@ export default function (state = initialState, action) {
                 ...state,
                 services: state.services.filter(service => service.serviceCode !== action.payload)
             }
-        case GET_COMPANY_SERVICE_BY_COMPANY_CODE:
-            return {
-                ...state,
-                companyService: action.payload
-            }
+
     }
 }

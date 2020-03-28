@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getAllServices, addCompanyService, getServiceByCompanyCode } from '../../actions/serviceActions';
+import { getAllServices } from '../../actions/serviceActions';
+import { addCompanyService, getServiceByCompanyCode } from '../../actions/companyServiceActions';
 
 
 class AddService extends Component {
@@ -151,7 +152,7 @@ AddService.propTypes = {
 
 const mapStateToProp = state => ({
     service: state.service,
-    companyService: state.service.companyService
+    companyService: state.companyService.companyService
 })
 
 export default connect(mapStateToProp, {

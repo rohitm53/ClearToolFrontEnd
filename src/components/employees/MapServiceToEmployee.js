@@ -5,7 +5,7 @@ import {
     getAllCompanyEmployees, getEmployeeServicebyCompany,
     postEmployeeService
 } from '../../actions/employeeActions';
-import { getServiceByCompanyCode } from '../../actions/serviceActions';
+import { getServiceByCompanyCode } from '../../actions/companyServiceActions';
 import EmployeeServiceCheckbox from './EmployeeServiceCheckbox';
 import hashmap from 'hashmap';
 
