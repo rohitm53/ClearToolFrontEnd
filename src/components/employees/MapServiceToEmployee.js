@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {
-    getAllCompanyEmployees, getEmployeeServicebyCompany,
-    postEmployeeService
-} from '../../actions/employeeActions';
+import { getAllCompanyEmployees } from '../../actions/employeeActions';
+import { getEmployeeServicebyCompany, postEmployeeService } from '../../actions/employeeServiceAction';
 import { getServiceByCompanyCode } from '../../actions/companyServiceActions';
 import EmployeeServiceCheckbox from './EmployeeServiceCheckbox';
 import hashmap from 'hashmap';
@@ -168,8 +166,8 @@ MapServiceToEmployee.propType = {
 
 const mapStateToProp = state => ({
     employees: state.employee.employees,
-    employeeService: state.employee.employeeService,
-    companyService: state.service.companyService
+    employeeService: state.employeeService.employeeService,
+    companyService: state.companyService.companyService
 })
 
 export default connect(mapStateToProp, {

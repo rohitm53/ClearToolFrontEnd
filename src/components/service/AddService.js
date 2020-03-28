@@ -86,7 +86,7 @@ class AddService extends Component {
                                     <div className="input-group mb-1" key={service.serviceCode}>
                                         <div className="input-group-prepend">
                                             <div className="input-group-text">
-                                                <input type="checkbox" checked={true} />
+                                                <input type="checkbox" checked={true} readOnly />
                                             </div>
                                         </div>
                                         <input type="text" className="form-control" value={service.serviceName} disabled />

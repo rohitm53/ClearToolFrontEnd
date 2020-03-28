@@ -1,12 +1,12 @@
 import {
-    GET_ALL_COMPANY_EMPLOYEE, GET_EMPLOYEE_BY_EMPLOYEE_CODE, DELETE_EMPLOYEE_BY_ID,
-    GET_EMPLOYEE_SERVICE_BY_COMPANY_CODE
+    GET_ALL_COMPANY_EMPLOYEE, GET_EMPLOYEE_BY_EMPLOYEE_CODE, DELETE_EMPLOYEE_BY_ID
+
 } from '../actions/types';
 
 const initialState = {
     employees: [],
-    employee: {},
-    employeeService: []
+    employee: {}
+
 }
 export default function (state = initialState, action) {
     switch (action.type) {
@@ -27,10 +27,6 @@ export default function (state = initialState, action) {
                 ...state,
                 employees: state.employees.filter(employee => employee.employeeCode !== action.payload)
             }
-        case GET_EMPLOYEE_SERVICE_BY_COMPANY_CODE:
-            return {
-                ...state,
-                employeeService: action.payload
-            }
+
     }
 }
