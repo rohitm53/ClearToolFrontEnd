@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {
     GET_ERRORS, GET_ALL_EMPLOYEES, GET_ALL_COMPANY_EMPLOYEE, GET_EMPLOYEE_BY_EMPLOYEE_CODE,
-    DELETE_EMPLOYEE_BY_ID, GET_EMPLOYEE_SERVICE_BY_COMPANY_CODE
+    DELETE_EMPLOYEE_BY_ID
 } from './types';
 
 export const postEmployee = (employee, history) => async dispatch => {

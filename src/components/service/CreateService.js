@@ -1,55 +1,55 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import classnames from 'classnames';
-import {createService} from "../../actions/serviceActions";
+import { createService } from "../../actions/serviceActions";
 
 class CreateService extends Component {
 
     constructor(props) {
         super(props);
-        this.state={
-            serviceCode:'',
-            serviceName:'',
-            noOfEmpReq:'',
-            errors:{}
+        this.state = {
+            serviceCode: '',
+            serviceName: '',
+            noOfEmpReq: '',
+            errors: {}
         }
     }
 
-    componentWillReceiveProps(nextProps){
-        if(nextProps.errors){
-            this.setState({errors:nextProps.errors});
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.errors) {
+            this.setState({ errors: nextProps.errors });
         }
     }
 
-    onChange=(e)=> {
-        this.setState({[e.target.name]:e.target.value});
+    onChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
     }
 
-    onSubmit=(e)=> {
+    onSubmit = (e) => {
         e.preventDefault();
         const service = {
-            serviceCode:this.state.serviceCode,
-            serviceName:this.state.serviceName,
-            noOfEmpReq:this.state.noOfEmpReq
+            serviceCode: this.state.serviceCode,
+            serviceName: this.state.serviceName,
+            noOfEmpReq: this.state.noOfEmpReq
         }
-        this.props.createService(service,this.props.history);
+        this.props.createService(service, this.props.history);
     }
 
     render() {
-        const {errors} = this.state;
+        const { errors } = this.state;
         return (
-            <div className="container">
+            <div className="container mt-3">
                 <h4 className="display-4 text-primary text-center">Create Service</h4>
-                <hr/>
+                <hr />
                 <div className="row ">
                     <div className="col-md-8 m-auto">
                         <form onSubmit={this.onSubmit.bind(this)}>
                             <div className="form-group">
                                 <label htmlFor="servicecode">Service Code</label>
-                                <input type="text" className={classnames("form-control form-control-lg",{
-                                         "is-invalid":errors.serviceCode
-                                     })} 
+                                <input type="text" className={classnames("form-control form-control-lg", {
+                                    "is-invalid": errors.serviceCode
+                                })}
                                     placeholder="service code"
                                     name="serviceCode"
                                     value={this.state.serviceCode}
@@ -63,9 +63,9 @@ class CreateService extends Component {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="servicename">Service Name</label>
-                                <input type="text" className={classnames("form-control form-control-lg",{
-                                         "is-invalid":errors.serviceName
-                                    })} 
+                                <input type="text" className={classnames("form-control form-control-lg", {
+                                    "is-invalid": errors.serviceName
+                                })}
                                     placeholder="service name"
                                     name="serviceName"
                                     value={this.state.serviceName}
@@ -79,22 +79,22 @@ class CreateService extends Component {
                             </div>
                             <div className="form-row">
                                 <div className="col">
-                                     <div className="form-group">
+                                    <div className="form-group">
                                         <label htmlFor="employeenumber">No. of Employee </label>
                                         <input type="number" className="form-control form-control-lg" placeholder="no. of emp"
                                             name="noOfEmpReq"
                                             value={this.state.noOfEmpReq}
                                             onChange={this.onChange}
                                         />
-                                     </div>
+                                    </div>
                                 </div>
                                 <div className="col">
 
                                 </div>
                             </div>
-                            <input type="submit" value="Submit" className="btn btn-primary btn-block"/>
+                            <input type="submit" value="Submit" className="btn btn-primary btn-block" />
                         </form>
-                   </div>
+                    </div>
                 </div>
             </div>
         )
@@ -102,12 +102,12 @@ class CreateService extends Component {
 }
 
 CreateService.propTypes = {
-    createService:PropTypes.func.isRequired,
-    errors:PropTypes.object.isRequired
+    createService: PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-    errors:state.errors
+    errors: state.errors
 });
 
-export default connect(mapStateToProps,{createService})(CreateService);
+export default connect(mapStateToProps, { createService })(CreateService);

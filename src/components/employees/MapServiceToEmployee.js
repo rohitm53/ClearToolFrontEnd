@@ -56,7 +56,7 @@ class MapServiceToEmployee extends Component {
                 arrServiceCode.push(serviceCode);
                 hmEmployeeService.set(employeeCode, arrServiceCode);
             } else {
-                var arrServiceCode = arrServiceCode.filter(item => item !== serviceCode);
+                arrServiceCode = arrServiceCode.filter(item => item !== serviceCode);
                 hmEmployeeService.set(employeeCode, arrServiceCode);
             }
         } else {
@@ -112,7 +112,7 @@ class MapServiceToEmployee extends Component {
         const { employees, companyService } = this.state;
 
         return (
-            <div className="container">
+            <div className="container mt-3">
                 <div className="row">
                     <div className="col">
                         <h4 className="display-5 text-primary text-center"><b>Assign Service</b></h4>

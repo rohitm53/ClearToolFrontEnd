@@ -42,7 +42,7 @@ class CreateAsset extends Component {
         const { errors } = this.state;
 
         return (
-            <div className="container">
+            <div className="container mt-3">
                 <h4 className="display-4 text-center text-primary">Create Asset</h4>
                 <hr />
                 <div className="row">

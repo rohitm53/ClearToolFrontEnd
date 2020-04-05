@@ -103,7 +103,7 @@ class AddService extends Component {
 
 
         return (
-            <div className="container smooth-scroll list-unstyled">
+            <div className="container smooth-scroll list-unstyled mt-3">
                 <div className="row">
                     <div className="col">
                         <h4 className="display-5 text-primary text-center"><b>Add Service</b></h4>

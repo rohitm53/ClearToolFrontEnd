@@ -63,7 +63,7 @@ class AddEmployee extends Component {
         const { errors } = this.state;
 
         return (
-            <div className="container">
+            <div className="container mt-3">
                 <h4 className="display-4 text-primary text-center">Add Employee</h4>
                 <hr />
                 <div className="row">

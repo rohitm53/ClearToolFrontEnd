@@ -1,32 +1,32 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {getServiceByid,createService} from '../../actions/serviceActions';
+import { connect } from 'react-redux';
+import { getServiceByid, createService } from '../../actions/serviceActions';
 
 class UpdateService extends Component {
 
     constructor(props) {
         super(props);
-        this.state={
+        this.state = {
             id: '',
             serviceCode: '',
             serviceName: '',
             noOfEmpReq: '',
-            create_at:'',
-            errors:{}
+            create_at: '',
+            errors: {}
         }
     }
 
-    componentDidMount(){
-        const {serviceCode} = this.props.match.params;
-        this.props.getServiceByid(serviceCode,this.props.history);
+    componentDidMount() {
+        const { serviceCode } = this.props.match.params;
+        this.props.getServiceByid(serviceCode, this.props.history);
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps) {
 
-        if(nextProps.errors){
-            this.setState({errors:nextProps.errors});
+        if (nextProps.errors) {
+            this.setState({ errors: nextProps.errors });
         }
 
         const {
@@ -46,30 +46,30 @@ class UpdateService extends Component {
         });
     }
 
-    onChange = (e)=> {
-        this.setState({[e.target.name]:e.target.value});
+    onChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
     }
 
     onUpdate = (e) => {
         e.preventDefault();
 
         const updatedService = {
-            id:this.state.id,
-            serviceCode:this.state.serviceCode,
-            serviceName:this.state.serviceName,
-            noOfEmpReq:this.state.noOfEmpReq,
-            create_at:this.state.create_at
+            id: this.state.id,
+            serviceCode: this.state.serviceCode,
+            serviceName: this.state.serviceName,
+            noOfEmpReq: this.state.noOfEmpReq,
+            create_at: this.state.create_at
         }
 
-        this.props.createService(updatedService,this.props.history);
+        this.props.createService(updatedService, this.props.history);
     }
 
     render() {
-        const {errors} = this.state;
+        const { errors } = this.state;
         return (
-            <div className="container">
+            <div className="container mt-3">
                 <h4 className="display-4 text-primary text-center">Update Service</h4>
-                <hr/>
+                <hr />
                 <div className="row">
                     <div className="col-md-8 m-auto">
                         <form onSubmit={this.onUpdate.bind(this)}>
@@ -83,9 +83,9 @@ class UpdateService extends Component {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="servicename">Service Name</label>
-                                <input type="text" className={classnames("form-control form-control-lg",{
-                                    "is-invalid":errors.serviceName
-                                })} 
+                                <input type="text" className={classnames("form-control form-control-lg", {
+                                    "is-invalid": errors.serviceName
+                                })}
                                     placeholder="Service Name"
                                     name="serviceName"
                                     value={this.state.serviceName}
@@ -110,7 +110,7 @@ class UpdateService extends Component {
                                 </div>
                                 <div className="col"></div>
                             </div>
-                            <input type="submit" value="Update" className="btn btn-primary btn-block"/>
+                            <input type="submit" value="Update" className="btn btn-primary btn-block" />
                         </form>
                     </div>
                 </div>
@@ -120,15 +120,15 @@ class UpdateService extends Component {
 }
 
 UpdateService.propTypes = {
-    service:PropTypes.object.isRequired,
-    getServiceByid:PropTypes.func.isRequired,
-    createService:PropTypes.func.isRequired
+    service: PropTypes.object.isRequired,
+    getServiceByid: PropTypes.func.isRequired,
+    createService: PropTypes.func.isRequired
 }
 
 const mapStateToProp = state => ({
-    service:state.service.service,
-    errors:state.errors
+    service: state.service.service,
+    errors: state.errors
 });
 
 
-export default connect(mapStateToProp,{getServiceByid,createService})(UpdateService);
+export default connect(mapStateToProp, { getServiceByid, createService })(UpdateService);

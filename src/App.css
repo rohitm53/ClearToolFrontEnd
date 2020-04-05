@@ -1,6 +1,9 @@
 .navbar {
   background: #563d7c;
 }
+.login {
+  height: 1000px;
+}
 
 .wrapper-2-item {
   display: grid;
@@ -28,4 +31,18 @@
 }
 .asset-card-body {
   background-color: #ccc3ea;
+}
+.login-bg {
+  min-height: 700px;
+  background: url("/images/home.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.login-card {
+  opacity: 0.8;
+  width: 40%;
+  margin: 0 auto;
+  padding: 50px;
+  font-weight: bold;
 }

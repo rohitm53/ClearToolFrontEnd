@@ -7,10 +7,6 @@ import AssetItem from './AssetItem';
 
 class AssetList extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     componentDidMount() {
         this.props.getAllCompanyAssets("WINIT");
     }
@@ -21,7 +17,7 @@ class AssetList extends Component {
         const { assets } = this.props.asset
 
         return (
-            <div className="container">
+            <div className="container mt-3">
                 <div className="row">
                     <div className="col">
                         <AddAssetButton />

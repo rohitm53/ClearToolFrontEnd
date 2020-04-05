@@ -5,7 +5,7 @@ class NavBar extends Component {
     render() {
         return (
             <div>
-                <nav className="navbar navbar-expand-sm navbar-dark mb-4">
+                <nav className="navbar navbar-expand-sm navbar-dark">
                     <div className="container">
                         <Link to="/" className="navbar-brand">
                             Clean Master
@@ -18,10 +18,10 @@ class NavBar extends Component {
                         <div className="collapse navbar-collapse" id="mobile-nav">
                             <ul className="navbar-nav ml-auto">
                                 <li className="nav-item">
-                                    <Link to="/register" className="nav-link">Register</Link>
+                                    <Link to="/registercompany" className="nav-link">Register</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link">Sign Out</a>
+                                    <Link to="/login" className="nav-link">Login</Link>
                                 </li>
                             </ul>
                         </div>
