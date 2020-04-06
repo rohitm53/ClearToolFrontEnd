@@ -16,7 +16,7 @@ class AddService extends Component {
 
     componentDidMount() {
         this.props.getAllServices();
-        this.props.getServiceByCompanyCode("WINIT");
+        this.props.getServiceByCompanyCode(this.props.companyCode);
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.companyService) {
@@ -25,8 +25,6 @@ class AddService extends Component {
     }
 
     onhandleChange = (e) => {
-        console.log("Selected checked : ", e.target.checked);
-        console.log("Selected Value : ", e.target.value);
 
         const services = this.props.service.services;
 
@@ -52,7 +50,7 @@ class AddService extends Component {
             serviceCode.push(companyService[i].serviceCode);
         }
         companyServiceReq = {
-            companyCode: "WINIT",
+            companyCode: this.props.companyCode,
             serviceCodes: serviceCode
         }
 
@@ -144,6 +142,7 @@ class AddService extends Component {
 }
 
 AddService.propTypes = {
+    companyCode: PropTypes.string.isRequired,
     service: PropTypes.object.isRequired,
     companyService: PropTypes.object.isRequired,
     getAllServices: PropTypes.func.isRequired,
@@ -152,7 +151,8 @@ AddService.propTypes = {
 
 const mapStateToProp = state => ({
     service: state.service,
-    companyService: state.companyService.companyService
+    companyService: state.companyService.companyService,
+    companyCode: state.loginState.companyCode
 })
 
 export default connect(mapStateToProp, {

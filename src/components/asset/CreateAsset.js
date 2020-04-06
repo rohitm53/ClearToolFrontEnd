@@ -32,7 +32,7 @@ class CreateAsset extends Component {
             code: this.state.code,
             name: this.state.name,
             quantity: this.state.quantity,
-            companyCode: "WINIT"
+            companyCode: this.props.companyCode
         };
         this.props.postAsset(asset, this.props.history);
     }
@@ -107,11 +107,13 @@ class CreateAsset extends Component {
 
 CreateAsset.propType = {
     postAsset: PropTypes.func.isRequired,
-    errors: PropTypes.object.isRequired
+    errors: PropTypes.object.isRequired,
+    companyCode: PropTypes.string.isRequired
 };
 
 const mapStateToProp = state => ({
-    errors: state.errors
+    errors: state.errors,
+    companyCode: state.loginState.companyCode
 });
 
 

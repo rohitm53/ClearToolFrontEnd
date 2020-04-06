@@ -21,9 +21,10 @@ class MapServiceToEmployee extends Component {
     }
 
     componentDidMount() {
-        this.props.getAllCompanyEmployees('WINIT');
-        this.props.getEmployeeServicebyCompany("WINIT");
-        this.props.getServiceByCompanyCode("WINIT");
+        const { companyCode } = this.props;
+        this.props.getAllCompanyEmployees(companyCode);
+        this.props.getEmployeeServicebyCompany(companyCode);
+        this.props.getServiceByCompanyCode(companyCode);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -100,7 +101,7 @@ class MapServiceToEmployee extends Component {
         }
         employeeServiceRequest = {
             employeeServices,
-            companyCode: "WINIT"
+            companyCode: this.props.companyCode
         }
         console.log("Final Object : ", employeeServiceRequest);
         this.props.postEmployeeService(employeeServiceRequest, this.props.history);
@@ -161,13 +162,15 @@ MapServiceToEmployee.propType = {
     getAllCompanyEmployees: PropTypes.func.isRequired,
     getEmployeeServicebyCompany: PropTypes.func.isRequired,
     company_selected_service: PropTypes.array.isRequired,
-    postEmployeeService: PropTypes.func.isRequired
+    postEmployeeService: PropTypes.func.isRequired,
+    companyCode: PropTypes.string.isRequired
 }
 
 const mapStateToProp = state => ({
     employees: state.employee.employees,
     employeeService: state.employeeService.employeeService,
-    companyService: state.companyService.companyService
+    companyService: state.companyService.companyService,
+    companyCode: state.loginState.companyCode
 })
 
 export default connect(mapStateToProp, {

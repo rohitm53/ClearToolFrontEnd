@@ -9,7 +9,7 @@ import AssignService from '../custombuttons/AssignService';
 class EmployeeList extends Component {
 
     componentDidMount() {
-        this.props.getAllCompanyEmployees("WINIT");
+        this.props.getAllCompanyEmployees(this.props.companyCode);
     }
     render() {
         const employees = this.props.employee.employees;
@@ -37,11 +37,13 @@ class EmployeeList extends Component {
 }
 EmployeeList.propTypes = {
     getAllCompanyEmployees: PropTypes.func.isRequired,
-    employee: PropTypes.object.isRequired
+    employee: PropTypes.object.isRequired,
+    companyCode: PropTypes.string.isRequired
 }
 
 const mapStateToProp = state => ({
-    employee: state.employee
+    employee: state.employee,
+    companyCode: state.loginState.companyCode
 })
 
 export default connect(mapStateToProp, { getAllCompanyEmployees })(EmployeeList);

@@ -6,6 +6,7 @@ import assetReducer from './assetReducer';
 import companyServiceReducer from './companyServiceReducer';
 import employeeServiceReducer from './employeeServiceReducer';
 import loginReducer from './loginReducer';
+import dashboardReducer from './dashboardReducer';
 
 export default combineReducers({
     errors: errorReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
     companyService: companyServiceReducer,
     employee: employeeReducer,
     employeeService: employeeServiceReducer,
-    asset: assetReducer
+    asset: assetReducer,
+    dashboardState: dashboardReducer
 });

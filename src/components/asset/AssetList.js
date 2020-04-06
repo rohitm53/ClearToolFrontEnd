@@ -8,7 +8,7 @@ import AssetItem from './AssetItem';
 class AssetList extends Component {
 
     componentDidMount() {
-        this.props.getAllCompanyAssets("WINIT");
+        this.props.getAllCompanyAssets(this.props.companyCode);
     }
 
 
@@ -43,12 +43,14 @@ class AssetList extends Component {
 
 AssetList.propType = {
     asset: PropTypes.object.isRequired,
-    getAllCompanyAssets: PropTypes.func.isRequired
+    getAllCompanyAssets: PropTypes.func.isRequired,
+    companyCode: PropTypes.string.isRequired
 
 }
 
 const mapStateToProp = state => ({
-    asset: state.asset
+    asset: state.asset,
+    companyCode: state.loginState.companyCode
 });
 
 
