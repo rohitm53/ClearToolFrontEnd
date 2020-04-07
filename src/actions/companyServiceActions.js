@@ -5,7 +5,7 @@ import { GET_COMPANY_SERVICE_BY_COMPANY_CODE, GET_ERRORS } from './types';
 export const addCompanyService = (companyService, history) => async dispatch => {
 
     try {
-        await axios.post("/api/companyservice", companyService)
+        await axios.post("/api/company/companyservice", companyService)
         history.push("/");
         dispatch({
             type: GET_ERRORS,
@@ -22,7 +22,7 @@ export const addCompanyService = (companyService, history) => async dispatch => 
 export const getServiceByCompanyCode = (companyCode) => async dispatch => {
 
     try {
-        const res = await axios.get(`/api/companyservice/${companyCode}`);
+        const res = await axios.get(`/api/company/companyservice/${companyCode}`);
         dispatch({
             type: GET_COMPANY_SERVICE_BY_COMPANY_CODE,
             payload: res.data

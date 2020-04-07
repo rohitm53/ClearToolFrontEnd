@@ -6,7 +6,7 @@ export const postEmployeeService = (employeeServiceRequest, history) => async di
     try {
         console.log("FInal Object : ", JSON.stringify(employeeServiceRequest));
 
-        await axios.post("/api/employeeservice", employeeServiceRequest);
+        await axios.post("/api/company/employeeservice", employeeServiceRequest);
         dispatch({
             type: GET_EMPLOYEE_SERVICE_BY_COMPANY_CODE,
             payload: []
@@ -28,7 +28,7 @@ export const postEmployeeService = (employeeServiceRequest, history) => async di
 export const getEmployeeServicebyCompany = (companyCode) => async dispatch => {
 
     try {
-        const res = await axios.get(`/api/employeeservice/${companyCode}`);
+        const res = await axios.get(`/api/company/employeeservice/${companyCode}`);
         dispatch({
             type: GET_EMPLOYEE_SERVICE_BY_COMPANY_CODE,
             payload: res.data

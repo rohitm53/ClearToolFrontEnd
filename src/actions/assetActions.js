@@ -5,7 +5,7 @@ export const postAsset = (asset, history) => async dispatch => {
 
     try {
 
-        await axios.post("/api/asset", asset);
+        await axios.post("/api/company/asset", asset);
         history.push("/assetlist");
         dispatch({
             type: GET_ERRORS,
@@ -23,7 +23,7 @@ export const postAsset = (asset, history) => async dispatch => {
 
 export const getAllCompanyAssets = (companyCode) => async dispatch => {
     try {
-        const res = await axios.get(`/api/asset/companyasset/${companyCode}`);
+        const res = await axios.get(`/api/company/asset/companyasset/${companyCode}`);
         dispatch({
             type: GET_ALL_ASSETS_BY_COMPANY_CODE,
             payload: res.data
@@ -40,7 +40,7 @@ export const deleteAssetByCode = (code) => async dispatch => {
     try {
 
         if (window.confirm("Are you sure you want to delete this asset")) {
-            await axios.delete(`/api/asset/${code}`);
+            await axios.delete(`/api/company/asset/${code}`);
             dispatch({
                 type: DELETE_ASSET_BY_ASSET_CODE,
                 payload: code
@@ -59,7 +59,7 @@ export const getAssetByAssetCode = (code) => async dispatch => {
 
     try {
 
-        const res = await axios.get(`/api/asset/${code}`);
+        const res = await axios.get(`/api/company/asset/${code}`);
         dispatch({
             type: GET_ASSET_BY_ASSET_CODE,
             payload: res.data

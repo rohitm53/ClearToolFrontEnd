@@ -5,7 +5,7 @@ export const getDashboardReportbyCompanyCode = (companyCode) => async dispatch =
 
     try {
 
-        const res = await axios.get(`/api/dashboard/${companyCode}`);
+        const res = await axios.get(`/api/company/dashboard/${companyCode}`);
         dispatch({
             type: GET_DASHBOARD_REPORT,
             payload: res.data
