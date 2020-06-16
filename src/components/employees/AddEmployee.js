@@ -21,7 +21,7 @@ class AddEmployee extends Component {
             city: '',
             country: '',
             pinCode: '',
-            companyCode: '',
+            companyCode: 'WINIT',
             errors: {}
         }
     }
@@ -45,7 +45,7 @@ class AddEmployee extends Component {
             city: this.state.city,
             country: this.state.country,
             pinCode: this.state.pinCode,
-            companyCode: this.props.companyCode
+            companyCode: "WINIT"
         };
         this.props.postEmployee(employee, this.props.history);
     }
@@ -283,12 +283,10 @@ class AddEmployee extends Component {
 AddEmployee.propTypes = {
     errors: PropTypes.object.isRequired,
     postEmployee: PropTypes.func.isRequired,
-    companyCode: PropTypes.string.isRequired
 }
 
 const mapPropToState = (state) => ({
     errors: state.errors,
-    companyCode: state.loginState.companyCode
 });
 
 export default connect(mapPropToState, { postEmployee })(AddEmployee);

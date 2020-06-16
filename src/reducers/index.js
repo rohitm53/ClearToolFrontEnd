@@ -5,12 +5,12 @@ import employeeReducer from './employeeReducer';
 import assetReducer from './assetReducer';
 import companyServiceReducer from './companyServiceReducer';
 import employeeServiceReducer from './employeeServiceReducer';
-import loginReducer from './loginReducer';
 import dashboardReducer from './dashboardReducer';
+import securityReducer from './securityReducer';
 
 export default combineReducers({
+    security: securityReducer,
     errors: errorReducer,
-    loginState: loginReducer,
     service: serviceReducers,
     companyService: companyServiceReducer,
     employee: employeeReducer,

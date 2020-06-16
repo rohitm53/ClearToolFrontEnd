@@ -16,7 +16,7 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-        this.props.getDashboardReportbyCompanyCode(this.props.companyCode);
+        this.props.getDashboardReportbyCompanyCode("WINIT");
     }
 
     componentWillReceiveProps(nextProps) {
@@ -85,12 +85,10 @@ class Dashboard extends Component {
 Dashboard.propType = {
     availableResource: PropTypes.object.isRequired,
     getDashboardReportbyCompanyCode: PropTypes.func.isRequired,
-    companyCode: PropTypes.string.isRequired
 }
 
 const mapStateToProp = state => ({
     availableResource: state.dashboardState.availableResource,
-    companyCode: state.loginState.companyCode
 });
 
 export default connect(mapStateToProp, { getDashboardReportbyCompanyCode })(Dashboard);
