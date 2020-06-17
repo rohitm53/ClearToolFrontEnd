@@ -16,6 +16,11 @@ class Login extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+
+        if (nextProps.security.validToken) {
+            this.props.history.push("/dashboard");
+        }
+
         if (nextProps.errors) {
             this.setState({ errors: nextProps.errors })
         }
@@ -62,7 +67,7 @@ class Login extends Component {
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="companycode">Password</label>
-                                    <input type="text" className={classnames("form-control form-control-lg",
+                                    <input type="password" className={classnames("form-control form-control-lg",
                                         { "is-invalid": errors.password }
                                     )}
                                         placeholder="Password"

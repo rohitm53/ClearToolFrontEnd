@@ -16,7 +16,8 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-        this.props.getDashboardReportbyCompanyCode("WINIT");
+        const companyCode = localStorage.getItem("companyCode");
+        this.props.getDashboardReportbyCompanyCode(companyCode);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -51,7 +52,7 @@ class Dashboard extends Component {
                         </Link>
                     </div>
                     <div className="col-md-3">
-                        <Link>
+                        <Link to="/updatecontact">
                             <p className="text-primary text-justify"><b>Update Contacts</b></p>
                         </Link>
                     </div>

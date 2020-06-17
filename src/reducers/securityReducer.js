@@ -1,7 +1,7 @@
 import { SET_CURRENT_COMPANY } from '../actions/types';
 
 const initialState = {
-    companyCode: '',
+    companySecurityInfo: '',
     validToken: false
 }
 
@@ -21,7 +21,7 @@ export default function (state = initialState, action) {
         case SET_CURRENT_COMPANY:
             return {
                 ...state,
-                companyCode: action.payload,
+                companySecurityInfo: action.payload,
                 validToken: booleanActionPayload(action.payload)
             }
 

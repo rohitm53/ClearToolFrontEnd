@@ -1,11 +1,10 @@
 import axios from 'axios';
 
-const setJWTTokenInHeader = jwtToken => {
-    if (jwtToken) {
-        axios.defaults.headers.common["Authorization"] = jwtToken;
+const setJWTTokenInHeader = token => {
+    if (token) {
+        axios.defaults.headers.common["Authorization"] = token;
     } else {
         delete axios.defaults.headers.common["Authorization"];
     }
-};
-
+}
 export default setJWTTokenInHeader;

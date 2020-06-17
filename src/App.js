@@ -19,6 +19,41 @@ import UpdateAsset from './components/asset/UpdateAsset';
 import Landing from './components/layouts/Landing';
 import RegisterCompany from './components/usermanagement/RegisterCompany';
 import Login from './components/usermanagement/Login';
+import jwt_decode from 'jwt-decode';
+import setJWTTokenInHeader from './securityUtils/setJWTTokenInHeader';
+import { SET_CURRENT_COMPANY } from './actions/types';
+import { logOut } from './actions/securityActions';
+
+const jwtToken = localStorage.getItem("jwtToken");
+
+if (jwtToken) {
+  setJWTTokenInHeader(jwtToken)
+
+  const decoded = jwt_decode(jwtToken);  //Not decoding currently as no claims added
+
+  const companySecurityInfo = {
+    companyCode: decoded.sub,
+    jwtInfo: decoded
+  };
+
+  store.dispatch({
+    type: SET_CURRENT_COMPANY,
+    payload: companySecurityInfo
+  });
+
+  //If token is expired 
+  const currentTime = Date.now() / 1000;
+  if (decoded.exp < currentTime) {
+
+    //handle logout
+    store.dispatch(logOut());
+    // logOut();   // this also can be used
+
+    // re-directing to main page
+    window.location.href = "/"
+  }
+
+}
 
 
 class App extends Component {

@@ -40,13 +40,17 @@ export const loginCompany = (loginRequest) => async dispatch => {
         setJWTTokenInHeader(jwt)
 
         // decode token on React
-        // const decoded = jwt_decode(jwtToken);  //Not decoding
+        const decoded = jwt_decode(jwt);  //Not decoding currently as no claims added
 
+        const companySecurityInfo = {
+            companyCode: loginRequest.username,
+            jwtInfo: decoded
+        };
 
         //dispacch to securityReducer
         dispatch({
             type: SET_CURRENT_COMPANY,
-            payload: loginRequest.username
+            payload: companySecurityInfo
         });
 
     } catch (err) {
@@ -55,4 +59,16 @@ export const loginCompany = (loginRequest) => async dispatch => {
             payload: err.response.data
         });
     }
+}
+
+
+export const logOut = () => dispatch => {
+    localStorage.removeItem("jwtToken");
+    localStorage.removeItem("companyCode");
+    setJWTTokenInHeader(false);
+    dispatch({
+        type: SET_CURRENT_COMPANY,
+        payload: {}
+    });
+
 }
