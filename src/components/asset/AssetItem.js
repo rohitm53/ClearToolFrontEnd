@@ -30,7 +30,7 @@ class AssetItem extends Component {
                                 <h6 className="card-title">{"Qty:" + asset.quantity}</h6>
                             </div>
                             <div className="col">
-                                <i class="fa fa-pencil-square-o" aria-hidden="true"
+                                <i className="fa fa-pencil-square-o" aria-hidden="true"
                                     onClick={this.onClick.bind(this, asset.code)}></i>
                                 <i className="fa fa-trash ml-3" onClick={this.onDelete.bind(this, asset.code)} ></i>
                             </div>

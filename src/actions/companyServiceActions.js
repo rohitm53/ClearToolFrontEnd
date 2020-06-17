@@ -6,7 +6,7 @@ export const addCompanyService = (companyService, history) => async dispatch => 
 
     try {
         await axios.post("/api/company/companyservice", companyService)
-        history.push("/dashboard");
+        history.push("/");
         dispatch({
             type: GET_ERRORS,
             payload: {}

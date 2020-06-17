@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import store from './store';
 import NavBar from './components/layouts/NavBar';
 import Dashboard from './components/dashboard/Dashboard';
@@ -23,7 +23,9 @@ import jwt_decode from 'jwt-decode';
 import setJWTTokenInHeader from './securityUtils/setJWTTokenInHeader';
 import { SET_CURRENT_COMPANY } from './actions/types';
 import { logOut } from './actions/securityActions';
+import SecuredRoute from './securityUtils/SecuredRoute';
 
+//For Security using JWT
 const jwtToken = localStorage.getItem("jwtToken");
 
 if (jwtToken) {
@@ -72,18 +74,19 @@ class App extends Component {
             {
               //Private Routes
             }
-            <Route exact path="/dashboard" component={Dashboard} />
-            <Route exact path="/createservice" component={CreateService} />
-            <Route exact path="/updateservice/:serviceCode" component={UpdateService} />
-            <Route exact path="/employeelist" component={EmployeeList} />
-            <Route exact path="/addemployee" component={AddEmployee} />
-            <Route exact path="/updateemployee/:employeecode" component={UpdateEmployee} />
-            <Route exact path="/addservice" component={AddService} />
-            <Route exact path="/assignservice" component={MapServiceToEmployee} />
-            <Route exact path="/assetlist" component={AssetList} />
-            <Route exact path="/createasset" component={CreateAsset} />
-            <Route exact path="/updateasset/:assetcode" component={UpdateAsset} />
-
+            <Switch>
+              <SecuredRoute exact path="/dashboard" component={Dashboard} />
+              <SecuredRoute exact path="/createservice" component={CreateService} />
+              <SecuredRoute exact path="/updateservice/:serviceCode" component={UpdateService} />
+              <SecuredRoute exact path="/employeelist" component={EmployeeList} />
+              <SecuredRoute exact path="/addemployee" component={AddEmployee} />
+              <SecuredRoute exact path="/updateemployee/:employeecode" component={UpdateEmployee} />
+              <SecuredRoute exact path="/addservice" component={AddService} />
+              <SecuredRoute exact path="/assignservice" component={MapServiceToEmployee} />
+              <SecuredRoute exact path="/assetlist" component={AssetList} />
+              <SecuredRoute exact path="/createasset" component={CreateAsset} />
+              <SecuredRoute exact path="/updateasset/:assetcode" component={UpdateAsset} />
+            </Switch>
           </div>
         </Router>
       </Provider>
