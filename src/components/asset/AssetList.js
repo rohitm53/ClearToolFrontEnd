@@ -50,7 +50,7 @@ AssetList.propType = {
 
 const mapStateToProp = state => ({
     asset: state.asset,
-    companyCode: state.loginState.companyCode
+    companyCode: state.security.companySecurityInfo.companyCode
 });
 
 

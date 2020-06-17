@@ -98,8 +98,10 @@ class UpdateEmployee extends Component {
             city: this.state.city,
             country: this.state.country,
             pinCode: this.state.pinCode,
-            companyCode: "WINIT"
+            employeeCode: this.state.employeeCode,
+            companyCode: this.props.companyCode//adding companycode from props
         };
+        console.log(employee);
         this.props.postEmployee(employee, this.props.history);
     }
 
@@ -329,12 +331,14 @@ class UpdateEmployee extends Component {
 UpdateEmployee.propTypes = {
     errors: PropTypes.object.isRequired,
     postEmployee: PropTypes.func.isRequired,
-    getEmployeeByEmployeeCode: PropTypes.func.isRequired
+    getEmployeeByEmployeeCode: PropTypes.func.isRequired,
+    companyCode: PropTypes.string.isRequired
 }
 
 const mapPropToState = (state) => ({
     errors: state.errors,
-    employee: state.employee.employee
+    employee: state.employee.employee,
+    companyCode: state.security.companySecurityInfo.companyCode
 });
 
 export default connect(mapPropToState, { postEmployee, getEmployeeByEmployeeCode })(UpdateEmployee);

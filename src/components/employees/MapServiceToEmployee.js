@@ -170,7 +170,7 @@ const mapStateToProp = state => ({
     employees: state.employee.employees,
     employeeService: state.employeeService.employeeService,
     companyService: state.companyService.companyService,
-    companyCode: state.loginState.companyCode
+    companyCode: state.security.companySecurityInfo.companyCode
 })
 
 export default connect(mapStateToProp, {

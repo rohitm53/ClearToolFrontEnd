@@ -113,7 +113,7 @@ CreateAsset.propType = {
 
 const mapStateToProp = state => ({
     errors: state.errors,
-    companyCode: state.loginState.companyCode
+    companyCode: state.security.companySecurityInfo.companyCode
 });
 
 

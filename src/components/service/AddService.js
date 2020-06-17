@@ -152,7 +152,7 @@ AddService.propTypes = {
 const mapStateToProp = state => ({
     service: state.service,
     companyService: state.companyService.companyService,
-    companyCode: state.loginState.companyCode
+    companyCode: state.security.companySecurityInfo.companyCode
 })
 
 export default connect(mapStateToProp, {

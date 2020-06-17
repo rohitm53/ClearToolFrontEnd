@@ -43,7 +43,7 @@ EmployeeList.propTypes = {
 
 const mapStateToProp = state => ({
     employee: state.employee,
-    companyCode: state.loginState.companyCode
+    companyCode: state.security.companySecurityInfo.companyCode
 })
 
 export default connect(mapStateToProp, { getAllCompanyEmployees })(EmployeeList);

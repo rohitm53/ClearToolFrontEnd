@@ -18,6 +18,12 @@ class RegisterCompany extends Component {
 
     }
 
+    componentDidMount() {
+        if (this.props.security.validToken) {
+            this.props.history.push("/dashboard");
+        }
+    }
+
     componentWillReceiveProps(nextProps) {
 
         if (nextProps.errors) {
@@ -134,11 +140,13 @@ class RegisterCompany extends Component {
 
 RegisterCompany.propTypes = {
     createNewCompany: PropTypes.func.isRequired,
-    errors: PropTypes.object.isRequired
+    errors: PropTypes.object.isRequired,
+    security: PropTypes.object.isRequired
 }
 
 const mapStateToProp = state => ({
-    errors: state.errors
+    errors: state.errors,
+    security: state.security
 })
 
 export default connect(mapStateToProp, { createNewCompany })(RegisterCompany);

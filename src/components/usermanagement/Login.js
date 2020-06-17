@@ -15,6 +15,12 @@ class Login extends Component {
         }
     }
 
+    componentDidMount() {
+        if (this.props.security.validToken) {
+            this.props.history.push("/dashboard");
+        }
+    }
+
     componentWillReceiveProps(nextProps) {
 
         if (nextProps.security.validToken) {
@@ -98,7 +104,8 @@ class Login extends Component {
 
 Login.propTypes = {
     loginCompany: PropTypes.func.isRequired,
-    errors: PropTypes.object.isRequired
+    errors: PropTypes.object.isRequired,
+    security: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
