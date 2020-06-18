@@ -13,12 +13,16 @@ class Landing extends Component {
 
     render() {
         return (
-            <div className="container">
-
-                <h3>Landing Page</h3>
-                <Link className="btn btn-lg btn-primary mr-2" to="/registercompany">Sign Up</Link>
-                <Link className="btn btn-lg btn-secondary mr-2" to="/login">Login</Link>
-
+            <div className="login-bg">
+                <div className="container text-center pt-5">
+                    <div className="border rounded-lg border-warning p-5">
+                        <Link className="btn btn-lg btn-danger mr-2" to="/registercompany">Sign Up</Link>
+                        <Link className="btn btn-lg btn-danger mr-2" to="/login">Login</Link><br />
+                        <i className="justify-content font-weight-bold">
+                            Register your company & gets our service
+                        </i>
+                    </div>
+                </div>
             </div>
         );
     }
