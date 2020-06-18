@@ -53,7 +53,7 @@ class Login extends Component {
         return (
             <div className="login-bg">
                 <div className="container login-card">
-                    <div className="card bg-primary text-white">
+                    <div className="card bg-info text-white">
                         <div className="card-body">
                             <form onSubmit={this.onSubmit.bind(this)}>
                                 <div className="form-group">
