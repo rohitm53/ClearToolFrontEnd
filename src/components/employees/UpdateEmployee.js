@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import { postEmployee, getEmployeeByEmployeeCode } from '../../actions/employeeActions';
+import { Modal } from 'react-bootstrap';
+import ConfirmEmployeeDetailsModal from './ConfirmEmployeeDetailsModal';
 
 class UpdateEmployee extends Component {
 
@@ -69,6 +71,7 @@ class UpdateEmployee extends Component {
                 country,
                 employeeCode,
                 created_at,
+                confirmModalShow : false
             });
         }
 
@@ -82,8 +85,8 @@ class UpdateEmployee extends Component {
         this.setState({ [e.target.name]: e.target.value });
     }
 
-    onSubmit = (e) => {
-        e.preventDefault();
+    generateEmployeeObject() {
+
         const employee = {
             id: this.state.id,
             firstName: this.state.firstName,
@@ -101,9 +104,25 @@ class UpdateEmployee extends Component {
             employeeCode: this.state.employeeCode,
             companyCode: this.props.companyCode//adding companycode from props
         };
+         return employee;
+    }
+
+    onSubmit = (e) => {
+        e.preventDefault();
+        const employee = this.generateEmployeeObject();
         console.log(employee);
         this.props.postEmployee(employee, this.props.history);
     }
+
+    openComfirmModal = (e) => {
+        e.preventDefault();
+        this.setState({confirmModalShow:true})
+    }
+
+    closeComfirmModal = () => {
+        this.setState({confirmModalShow:false})
+    }
+
 
     render() {
 
@@ -115,7 +134,7 @@ class UpdateEmployee extends Component {
                 <hr />
                 <div className="row">
                     <div className="col">
-                        <form onSubmit={this.onSubmit.bind(this)}>
+                        <form onSubmit={this.openComfirmModal.bind(this)}>
                             <div className="form-row">
                                 <div className="form-group col-md-4">
                                     <label htmlFor="firstName">First Name *</label>
@@ -324,6 +343,33 @@ class UpdateEmployee extends Component {
                         </form>
                     </div>
                 </div>
+                <Modal show={this.state.confirmModalShow} 
+                       onHide={this.closeComfirmModal} 
+                       size="lg"
+                       backdrop="static"
+                       keyboard={false}
+                       centered 
+                >
+
+                    <Modal.Header closeButton>
+                         <Modal.Title>Confirm Employee Details</Modal.Title>
+                    </Modal.Header>
+                    
+                    <Modal.Body>
+                            <ConfirmEmployeeDetailsModal employee = {this.generateEmployeeObject()} />
+                    </Modal.Body>
+
+                    <Modal.Footer>
+                        <button className="btn btn-danger" onClick={this.closeComfirmModal} >Cancel</button>
+                       
+                        <button className="btn btn-success" 
+                                onClick={this.onSubmit}
+                         >Confirm</button>
+                        
+
+                    </Modal.Footer>
+
+                </Modal>
             </div>
         )
     }

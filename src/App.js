@@ -71,12 +71,12 @@ class App extends Component {
             <Route exact path="/" component={Landing} />
             <Route exact path="/registercompany" component={RegisterCompany} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/createservice" component={CreateService} />
             {
               //Private Routes
             }
             <Switch>
               <SecuredRoute exact path="/dashboard" component={Dashboard} />
-              <SecuredRoute exact path="/createservice" component={CreateService} />
               <SecuredRoute exact path="/updateservice/:serviceCode" component={UpdateService} />
               <SecuredRoute exact path="/employeelist" component={EmployeeList} />
               <SecuredRoute exact path="/addemployee" component={AddEmployee} />
