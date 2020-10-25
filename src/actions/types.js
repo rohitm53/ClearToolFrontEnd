@@ -32,3 +32,7 @@ export const DELETE_ASSET_BY_ASSET_CODE = "DELETE_ASSET_BY_ASSET_CODE";
 //7. Dashboard Actions
 export const GET_DASHBOARD_REPORT = "GET_DASHBOARD_REPORT";
 
+
+//8. GetAllCompanyServiceRequest
+export const GET_ALL_SERVICE_REQUEST="GET_ALL_SERVICE_REQUEST"
+

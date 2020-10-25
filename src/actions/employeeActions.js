@@ -27,7 +27,8 @@ export const getEmployees = () => async dispatch => {
             type: GET_ALL_EMPLOYEES,
             payload: res.data
         });
-    } catch (err) {
+    } 
+    catch (err) {
         dispatch({
             type: GET_ERRORS,
             payload: err.response.data

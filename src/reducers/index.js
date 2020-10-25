@@ -7,6 +7,7 @@ import companyServiceReducer from './companyServiceReducer';
 import employeeServiceReducer from './employeeServiceReducer';
 import dashboardReducer from './dashboardReducer';
 import securityReducer from './securityReducer';
+import serviceRequestsReducer from './serviceRequestsReducer';
 
 export default combineReducers({
     security: securityReducer,
@@ -16,5 +17,6 @@ export default combineReducers({
     employee: employeeReducer,
     employeeService: employeeServiceReducer,
     asset: assetReducer,
-    dashboardState: dashboardReducer
+    dashboardState: dashboardReducer,
+    serviceRequest:serviceRequestsReducer
 });

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import { postEmployee } from '../../actions/employeeActions';
-import { Modal , Spinner} from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import ConfirmEmployeeDetailsModal from './ConfirmEmployeeDetailsModal';
 
 class AddEmployee extends Component {

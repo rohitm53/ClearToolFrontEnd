@@ -19,13 +19,68 @@ class NavBar extends Component {
             <div className="container">
                 <Link to="/dashboard" className="navbar-brand">
                     Clean Master
-            </Link>
+                </Link>
+
                 <button className="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#mobile-nav">
                     <span className="navbar-toggler-icon"></span>
                 </button>
 
                 <div className="collapse navbar-collapse" id="mobile-nav">
+
+                    <ul className="navbar-nav mr-auto">
+                        <li className="nav-item dropdown">
+                            <Link className="nav-link dropdown-toggle" id="service" 
+                                  role="button" 
+                                  data-toggle="dropdown" 
+                                  aria-haspopup="true" 
+                                  aria-expanded="false"> 
+                                Services    
+                                </Link>
+
+                            <div className="dropdown-menu" aria-labelledby="service">
+                                <Link className="dropdown-item" 
+                                    to="/addservice">Available Services</Link>
+                               
+                                <Link className="dropdown-item">Manage Services</Link>
+                            </div>
+                        </li>
+
+                        <li className="nav-item dropdown">
+                            <Link className="nav-link dropdown-toggle" id="resources" 
+                                            role="button" 
+                                            data-toggle="dropdown" 
+                                            aria-haspopup="true" 
+                                            aria-expanded="false"> 
+                                Resources    
+                            </Link>
+
+                            <div className="dropdown-menu" aria-labelledby="resources">
+                                <Link className="dropdown-item" 
+                                     to="/employeelist">Employee Management</Link>
+                                     
+                                <Link className="dropdown-item" to="/assetlist">Assets</Link>
+                            </div>
+                        </li>
+
+                        <li className="nav-item dropdown">
+                            <Link className="nav-link dropdown-toggle" id="transactions" 
+                                                role="button" 
+                                                data-toggle="dropdown" 
+                                                aria-haspopup="true" 
+                                                aria-expanded="false"> 
+                                Transactions    
+                                </Link>
+
+                            <div className="dropdown-menu" aria-labelledby="transactions">
+                                <Link className="dropdown-item" to="/servicerequests" 
+                                        >Service Request</Link>
+                                <Link className="dropdown-item">Assigned Employee</Link>
+                            </div>
+                        </li>
+
+                    </ul>
+
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item">
                             <Link className="nav-link" to="/updatecontacts">
@@ -49,7 +104,7 @@ class NavBar extends Component {
             <div className="container">
                 <Link to="/" className="navbar-brand">
                     Clean Master
-            </Link>
+                </Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#mobile-nav">
                     <span className="navbar-toggler-icon"></span>

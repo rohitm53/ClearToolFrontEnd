@@ -35,28 +35,7 @@ class Dashboard extends Component {
     render() {
         return (
             <div className="container mt-3">
-                <div className="row">
-                    <div className="col-md-3">
-                        <Link to="/addservice">
-                            <p className="text-primary text-justify"><b>Add Service</b></p>
-                        </Link>
-                    </div>
-                    <div className="col-md-3">
-                        <Link to="/employeelist">
-                            <p className="text-primary text-justify"><b>Add Employee</b></p>
-                        </Link>
-                    </div>
-                    <div className="col-md-3">
-                        <Link to="/assetlist">
-                            <p className="text-primary text-justify"><b>Add Assets</b></p>
-                        </Link>
-                    </div>
-                    <div className="col-md-3">
-                        <Link to="/updatecontact">
-                            <p className="text-primary text-justify"><b>Update Contacts</b></p>
-                        </Link>
-                    </div>
-                </div>
+               
                 <div className="row mt-2">
                     <div className="col-6">
                         <b className="text-muted">Available Resource</b>
