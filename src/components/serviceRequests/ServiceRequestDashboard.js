@@ -2,10 +2,13 @@ import React, { Component } from 'react'
 import ServiceReqestItem from './ServiceReqestItem';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {getAllServiceRequest} from '../../actions/serviceRequestActions'
-import { ASSIGNED_SERVICE_REQ, CANCELED_SERVICE_REQ, COMPLETED_SERVICE_REQ, INPROGRESS_SERVICE_REQ, PENDING_SERVICE_REQ } from '../../constants/Constants';
+import {getAllServiceRequest} from '../../actions/serviceRequestActions';
+import { getAllCompanyEmployees } from '../../actions/employeeActions';
+import { ASSIGNED_SERVICE_REQ, CANCELED_SERVICE_REQ, COMPLETED_SERVICE_REQ, 
+    INPROGRESS_SERVICE_REQ, PENDING_SERVICE_REQ } from '../../constants/Constants';
 import { Modal } from 'react-bootstrap';
 import ServiceRequestDetailsModal from './ServiceRequestDetailsModal';
+import store from '../../store';
 
 class ServiceRequestDashboard extends Component {
 
@@ -17,85 +20,77 @@ class ServiceRequestDashboard extends Component {
         }
     }
 
+    componentDidMount(){
+        this.props.getAllServiceRequest();
+        this.props.getAllCompanyEmployees();
+    }
+
     openServiceReqDetailModal = (id) => {
 
         const serviceReq = this.props.serviceRequests.filter(request => request.id===id)[0];
-
         this.setState({
             showServiceReqDetailModal:true,
             selectedServiceReq:serviceReq
         });
     }
 
-    closServiceReqDetailModal =() => {
+    closServiceReqDetailModal =(isRefresReq) => {
+
+        if(isRefresReq){
+            window.location.reload(false);
+        }
+
         this.setState({
             showServiceReqDetailModal:false,
             selectedServiceReq:{}
         });
     }
 
-    componentDidMount(){
-        this.props.getAllServiceRequest()
-    }
-
     render() {
 
         const {serviceRequests} = this.props;
+
+        let serviceReqComponent=[];
 
         let pendingReq=[];
         let inProgressReq=[];
         let completedReq=[];
         let cancelledReq=[];
 
-        for(let i=0;i<serviceRequests.length;i++){
-            
-            let item = serviceRequests[i];
-            let statusCode=item.statusCode;
 
-            if(statusCode===PENDING_SERVICE_REQ){
-                pendingReq.push(
+        if(serviceRequests!=null && serviceRequests.length>0){
+
+            for(let i=0;i<serviceRequests.length;i++){
+                const request = serviceRequests[i];
+                serviceReqComponent.push(
                     <ServiceReqestItem 
-                            key={item.id}  
-                            serviceRequest = {item}    
+                            key={request.id}  
+                            serviceRequest = {request}    
                             openServiceReqDetailModal={this.openServiceReqDetailModal}
                             />
-                );
-            }else if(statusCode===ASSIGNED_SERVICE_REQ || statusCode==INPROGRESS_SERVICE_REQ){
-                inProgressReq.push(
-                    <ServiceReqestItem 
-                            key={item.id}  
-                            serviceRequest = {item}  
-                            openServiceReqDetailModal={this.openServiceReqDetailModal}
-                            />
-                );
-            }else if(statusCode===COMPLETED_SERVICE_REQ){
-                completedReq.push(
-                    <ServiceReqestItem 
-                            key={item.id}  
-                            serviceRequest = {item}    
-                            openServiceReqDetailModal={this.openServiceReqDetailModal}
-                            />
-                );
-            }else  if(statusCode===CANCELED_SERVICE_REQ){
-                cancelledReq.push(
-                    <ServiceReqestItem 
-                            key={item.id}  
-                            serviceRequest = {item}  
-                            openServiceReqDetailModal={this.openServiceReqDetailModal}  
-                            />
-                );
-            }else{
-                cancelledReq.push(
-                    <ServiceReqestItem 
-                            key={item.id}  
-                            serviceRequest = {item}    
-                            openEmployeeAssignModal={this.openEmployeeAssignModal}
-                            />
-                );
+                )
             }
 
-        }
 
+            for(let i=0;i<serviceReqComponent.length;i++){
+            
+                let component = serviceReqComponent[i];
+                let statusCode=component.props.serviceRequest.statusCode;
+    
+                if(statusCode===PENDING_SERVICE_REQ){
+                    pendingReq.push(component);
+                }else if(statusCode===ASSIGNED_SERVICE_REQ || statusCode===INPROGRESS_SERVICE_REQ){
+                    inProgressReq.push(component);
+                }else if(statusCode===COMPLETED_SERVICE_REQ){
+                    completedReq.push(component);
+                }else  if(statusCode===CANCELED_SERVICE_REQ){
+                    cancelledReq.push(component);
+                }else{
+                    cancelledReq.push(component);
+                }
+    
+            }
+        }
 
         return (
            <div className="container">
@@ -163,7 +158,10 @@ class ServiceRequestDashboard extends Component {
 
                 <Modal.Body>
                     <ServiceRequestDetailsModal 
-                        serviceRequest = {this.state.selectedServiceReq.serviceReqCode}
+                        serviceRequest = {this.state.selectedServiceReq}
+                        arrAllEmployee={this.props.employees}
+                        closServiceReqDetailModal= {this.closServiceReqDetailModal}
+
                     />
                 </Modal.Body>
 
@@ -176,11 +174,14 @@ class ServiceRequestDashboard extends Component {
 
 ServiceRequestDashboard.propTypes = {
     getAllServiceRequest : PropTypes.func.isRequired,
-    serviceRequests : PropTypes.array.isRequired
+    getAllCompanyEmployees: PropTypes.func.isRequired,
+    serviceRequests : PropTypes.array.isRequired,
+    employees:PropTypes.array.isRequired,
 }
 
 const mapStateToProp = (state)=>({
-    serviceRequests:state.serviceRequest.serviceRequests
+    serviceRequests:state.serviceRequest.serviceRequests,
+    employees:state.employee.employees,
 })
 
-export default connect(mapStateToProp,{getAllServiceRequest})(ServiceRequestDashboard);
+export default connect(mapStateToProp,{getAllServiceRequest,getAllCompanyEmployees})(ServiceRequestDashboard);

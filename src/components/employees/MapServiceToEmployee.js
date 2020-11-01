@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getAllCompanyEmployees } from '../../actions/employeeActions';
-import { getEmployeeServicebyCompany, postEmployeeService } from '../../actions/employeeServiceAction';
+import { getCompanyEmployeeService, postEmployeeService } from '../../actions/employeeServiceAction';
 import { getServiceByCompanyCode } from '../../actions/companyServiceActions';
 import EmployeeServiceCheckbox from './EmployeeServiceCheckbox';
 import hashmap from 'hashmap';
@@ -23,7 +23,7 @@ class MapServiceToEmployee extends Component {
     componentDidMount() {
         const { companyCode } = this.props;
         this.props.getAllCompanyEmployees(companyCode);
-        this.props.getEmployeeServicebyCompany(companyCode);
+        this.props.getCompanyEmployeeService();
         this.props.getServiceByCompanyCode(companyCode);
     }
 
@@ -160,7 +160,7 @@ class MapServiceToEmployee extends Component {
 MapServiceToEmployee.propType = {
     employees: PropTypes.array.isRequired,
     getAllCompanyEmployees: PropTypes.func.isRequired,
-    getEmployeeServicebyCompany: PropTypes.func.isRequired,
+    getCompanyEmployeeService: PropTypes.func.isRequired,
     company_selected_service: PropTypes.array.isRequired,
     postEmployeeService: PropTypes.func.isRequired,
     companyCode: PropTypes.string.isRequired
@@ -174,6 +174,6 @@ const mapStateToProp = state => ({
 })
 
 export default connect(mapStateToProp, {
-    getAllCompanyEmployees, getEmployeeServicebyCompany,
+    getAllCompanyEmployees, getCompanyEmployeeService,
     getServiceByCompanyCode, postEmployeeService
 })(MapServiceToEmployee);

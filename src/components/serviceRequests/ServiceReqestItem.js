@@ -1,4 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import "./ServiceRequestItem.css";
+import { PENDING_SERVICE_REQ,ASSIGNED_SERVICE_REQ ,INPROGRESS_SERVICE_REQ,
+    COMPLETED_SERVICE_REQ , CANCELED_SERVICE_REQ } from '../../constants/Constants';
 
 
 var p0Margin = {
@@ -24,26 +27,39 @@ class ServiceReqestItem extends Component {
     render() {
 
         const {serviceRequest} = this.props;
+        let cardHeaderBg="card-header bg-info text-white";
+        if(serviceRequest.statusCode===PENDING_SERVICE_REQ){
+            cardHeaderBg="card-header pending-service-item text-dark" ;
+        }else if(serviceRequest.statusCode===ASSIGNED_SERVICE_REQ){
+            cardHeaderBg="card-header assigned-service-item text-white" ;
+        }else if(serviceRequest.statusCode===INPROGRESS_SERVICE_REQ){
+            cardHeaderBg="card-header in-progress-service-item text-white" ;
+        }else if(serviceRequest.statusCode===COMPLETED_SERVICE_REQ){
+            cardHeaderBg="card-header completed-service-item text-dark" ;
+        }else if(serviceRequest.statusCode===CANCELED_SERVICE_REQ){
+            cardHeaderBg="card-header cancelled-service-item text-white" ;
+        }
 
         return (
            <div className="card my-2" onClick={this.onItemClick.bind(this,serviceRequest.id)}>
-                <div className="card-header bg-info text-white">
+                <div className={cardHeaderBg}>
                     {serviceRequest.serviceReqCode}
                 </div>
                 <div className="card-body service-req-item-body py-2 ">
                     <div className="card-title">
                         <h5>{serviceRequest.serviceName} ({serviceRequest.serviceCode}) </h5>
                     </div>
-                    <p style={p1Margin} className="d-inline"> At : {serviceRequest.time}</p>
-                    <p style={p1Margin}>By user: Rohit Manohar</p>
+                    <p style={p1Margin}>Date : {new Date(serviceRequest.scheduled).toDateString()}</p>
+                    <p style={p1Margin}>Time : {new Date(serviceRequest.scheduled).toISOString().substr(11,5)} hrs</p>
+                    <p style={p1Margin}>By user: {serviceRequest.mobileUserName}</p>
                  
                 </div>
                 {
                     serviceRequest.assignedEmployeeCode && (
                         <div className="card-footer py-2">
                             <p style={p0Margin} className="font-weight-bold">Assigned Employee Details</p>
-                            <p style={p1Margin}>Name : Rohit Manohar</p>
-                            <p style={p1Margin}>Mobile : 8790061749</p>
+                            <p style={p1Margin}>Name : {serviceRequest.assignedEmployeeName}</p>
+                            <p style={p1Margin}>Mobile : {serviceRequest.assignedEmployeeMobile}</p>
                         </div>
                     )
                 }

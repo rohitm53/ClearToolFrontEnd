@@ -1,0 +1,15 @@
+.pending-service-item {
+    background-color: #00FFD4;
+}
+.assigned-service-item {
+    background-color: #FF7000;
+}
+.in-progress-service-item {
+    background-color: #FF9B00;
+}
+.completed-service-item {
+    background-color: #00FF2E;
+}
+.cancelled-service-item {
+    background-color: #FF2A00;
+}

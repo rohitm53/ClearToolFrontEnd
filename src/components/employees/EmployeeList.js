@@ -9,7 +9,7 @@ import AssignService from '../custombuttons/AssignService';
 class EmployeeList extends Component {
 
     componentDidMount() {
-        this.props.getAllCompanyEmployees(this.props.companyCode);
+        this.props.getAllCompanyEmployees();
     }
     render() {
         const employees = this.props.employee.employees;
