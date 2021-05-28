@@ -2,8 +2,7 @@ import {GET_ALL_SERVICE_REQUEST,GET_AVAILABLE_EMPLOYEE_FOR_SERVICE,
     POST_ASSIGN_EMPLOYEE_REQUEST} from '../actions/types';
 
 const initialState = {
-    serviceRequests:[],
-    availableEmployeeCode:[],
+    service_requests:[],
     assignEmployeeResponse:{}
 }
 export default function (state=initialState,action) {
@@ -14,13 +13,9 @@ export default function (state=initialState,action) {
 
         case GET_ALL_SERVICE_REQUEST : return { 
             ...state,
-            serviceRequests:action.payload.serviceRequests
+            service_requests:action.payload.service_requests
         }
-        
-        case GET_AVAILABLE_EMPLOYEE_FOR_SERVICE : return {
-            ...state,
-            availableEmployeeCode:action.payload
-        }
+   
         case POST_ASSIGN_EMPLOYEE_REQUEST : return {
             ...state,
             assignEmployeeResponse:action.payload

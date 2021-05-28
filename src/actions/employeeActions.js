@@ -38,7 +38,7 @@ export const getEmployees = () => async dispatch => {
 
 export const getAllCompanyEmployees = () => async dispatch => {
     try {
-        const res = await axios.get("/api/company/employee/companyemployee");
+        const res = await axios.get("/api/company/employee/company-employee");
         dispatch({
             type: GET_ALL_COMPANY_EMPLOYEE,
             payload: res.data

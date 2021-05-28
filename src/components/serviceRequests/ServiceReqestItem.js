@@ -49,9 +49,9 @@ class ServiceReqestItem extends Component {
                     <div className="card-title">
                         <h5>{serviceRequest.serviceName} ({serviceRequest.serviceCode}) </h5>
                     </div>
-                    <p style={p1Margin}>Date : {new Date(serviceRequest.scheduled).toDateString()}</p>
-                    <p style={p1Margin}>Time : {new Date(serviceRequest.scheduled).toISOString().substr(11,5)} hrs</p>
-                    <p style={p1Margin}>By user: {serviceRequest.mobileUserName}</p>
+                    <p style={p1Margin}>Date : {serviceRequest.scheduleDate}</p>
+                    <p style={p1Margin}>Time : {serviceRequest.scheduleTime} hrs</p>
+                    <p style={p1Margin}>By user: ({serviceRequest.mobileUserCode}){serviceRequest.mobileUserName}</p>
                  
                 </div>
                 {

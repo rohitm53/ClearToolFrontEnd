@@ -2,25 +2,18 @@ import React, { Component } from 'react';
 import Select from 'react-select'
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {getAvailableEmployeeForService,postAssignEmployeeRequest} from '../../actions/serviceRequestActions';
+import {postAssignEmployeeRequest} from '../../actions/serviceRequestActions';
 import { ASSIGNED_SERVICE_REQ, INPROGRESS_SERVICE_REQ, PENDING_SERVICE_REQ } from '../../constants/Constants';
 import store from '../../store';
 import { GET_ERRORS } from '../../actions/types';
 
 class ServiceRequestDetailsModal extends Component {
 
-    
     constructor(props){
         super(props);
         this.state = {
-            arrAvailableEmployee:[],
             selectedEmployee:{},
         }
-    }
-
-    componentDidMount(){
-        const serviceCode = this.props.serviceRequest.serviceCode;
-        this.props.getAvailableEmployeeForService(serviceCode);
     }
 
     componentWillReceiveProps(nextProps){
@@ -50,7 +43,7 @@ class ServiceRequestDetailsModal extends Component {
         }
 
         if(nextProps.assignEmployeeResponse.statusCode===ASSIGNED_SERVICE_REQ){
-            this.props.closServiceReqDetailModal(true);
+            this.props.closeServiceReqDetailModal(true);
         }
     }
    
@@ -78,13 +71,13 @@ class ServiceRequestDetailsModal extends Component {
 
 
     render() {
-        const {serviceRequest} = this.props;
+        const {serviceRequest , arrAllEmployee} = this.props;
         let assignEmployeeCol;
         if(serviceRequest.statusCode===PENDING_SERVICE_REQ){
             assignEmployeeCol= (
                 <Select
                     name="Select Employee"
-                    options={this.state.arrAvailableEmployee}
+                    options={arrAllEmployee}
                     getOptionLabel = {(employee)=>employee.firstName + employee.lastName}
                     getOptionValue={(employee)=>employee.employeeCode}
                     onChange = {(selection,action)=>this.handleSelect(selection)}
@@ -100,16 +93,16 @@ class ServiceRequestDetailsModal extends Component {
         }
 
 
-
-
-        if(this.state.arrAvailableEmployee.length>0){
+        if(arrAllEmployee.length>0){
             return (
                 <div className="card">
                 <div className="card-body boder-danger">
     
-                    <h5 className="card-title">User : {serviceRequest.mobileUserName}</h5>
-    
-                    <table className="table table-bordered">
+                    <h5 className="card-title d-inline">User : {serviceRequest.mobileUserName}</h5>
+                    <h5 className="card-title d-inline ml-5">Code : {serviceRequest.mobileUserCode}</h5>
+
+
+                    <table className="table table-bordered mt-2">
                         <thead>
                             <tr>
                                 <th scope="col">Service Name</th>
@@ -121,12 +114,11 @@ class ServiceRequestDetailsModal extends Component {
                         <tbody>
                             <tr>
                                 <td>{serviceRequest.serviceName}</td>
-                                {serviceRequest.scheduled && (
-                                    <td>{ new Date(serviceRequest.scheduled).toDateString()}</td>
+                                {serviceRequest.scheduleDate && (
+                                    <td>{ serviceRequest.scheduleDate}</td>
                                 )}
-    
-                                {serviceRequest.scheduled && (
-                                    <td>{ new Date(serviceRequest.scheduled).toISOString().substr(11,5)}</td>
+                                {serviceRequest.scheduleTime && (
+                                    <td>{serviceRequest.scheduleTime } hrs</td>
                                 )}
                                 <td>
                                     {assignEmployeeCol}
@@ -141,7 +133,7 @@ class ServiceRequestDetailsModal extends Component {
                             <button className="btn btn-success btn-md center-block" style={{width:100}} 
                                onClick={this.onSubmit.bind(this)} >OK</button>
                             <button className="btn btn-danger btn-md center-block ml-5" style={{width:100}}
-                                onClick = {this.props.closServiceReqDetailModal.bind(this,false)}
+                                onClick = {this.props.closeServiceReqDetailModal.bind(this,false)}
                             >Cancel</button>
                         </div>
                     </div>
@@ -158,7 +150,7 @@ class ServiceRequestDetailsModal extends Component {
                     </div>
                     <div className="text-center">
                         <button className="btn btn-danger text-center" 
-                                 onClick = {this.props.closServiceReqDetailModal.bind(this,false)}
+                                 onClick = {this.props.closeServiceReqDetailModal.bind(this,false)}
                         >OK</button>
                     </div>
                 
@@ -170,7 +162,6 @@ class ServiceRequestDetailsModal extends Component {
 }
 
 ServiceRequestDetailsModal.propTypes = {
-    getAvailableEmployeeForService:PropTypes.func.isRequired,
     availableEmployeeCode:PropTypes.array.isRequired,
     postAssignEmployeeRequest:PropTypes.func.isRequired,
     assignEmployeeResponse:PropTypes.object.isRequired,
@@ -189,5 +180,4 @@ ServiceRequestDetailsModal.propTypes = {
 //     availableEmployeeCode:state.serviceRequest.availableEmployeeCode
 // })
 
-export default connect(mapStateToProp,{getAvailableEmployeeForService
-    ,postAssignEmployeeRequest})(ServiceRequestDetailsModal);
+export default connect(mapStateToProp,{postAssignEmployeeRequest})(ServiceRequestDetailsModal);

@@ -8,7 +8,6 @@ import { ASSIGNED_SERVICE_REQ, CANCELED_SERVICE_REQ, COMPLETED_SERVICE_REQ,
     INPROGRESS_SERVICE_REQ, PENDING_SERVICE_REQ } from '../../constants/Constants';
 import { Modal } from 'react-bootstrap';
 import ServiceRequestDetailsModal from './ServiceRequestDetailsModal';
-import store from '../../store';
 
 class ServiceRequestDashboard extends Component {
 
@@ -27,17 +26,17 @@ class ServiceRequestDashboard extends Component {
 
     openServiceReqDetailModal = (id) => {
 
-        const serviceReq = this.props.serviceRequests.filter(request => request.id===id)[0];
+        const serviceReq = this.props.service_requests.filter(request => request.id===id)[0];
         this.setState({
             showServiceReqDetailModal:true,
             selectedServiceReq:serviceReq
         });
     }
 
-    closServiceReqDetailModal =(isRefresReq) => {
+    closeServiceReqDetailModal =(isRefresReq) => {
 
         if(isRefresReq){
-            window.location.reload(false);
+          this.forceUpdate();
         }
 
         this.setState({
@@ -48,7 +47,7 @@ class ServiceRequestDashboard extends Component {
 
     render() {
 
-        const {serviceRequests} = this.props;
+        const {service_requests} = this.props;
 
         let serviceReqComponent=[];
 
@@ -58,10 +57,10 @@ class ServiceRequestDashboard extends Component {
         let cancelledReq=[];
 
 
-        if(serviceRequests!=null && serviceRequests.length>0){
+        if(service_requests!=null && service_requests.length>0){
 
-            for(let i=0;i<serviceRequests.length;i++){
-                const request = serviceRequests[i];
+            for(let i=0;i<service_requests.length;i++){
+                const request = service_requests[i];
                 serviceReqComponent.push(
                     <ServiceReqestItem 
                             key={request.id}  
@@ -147,7 +146,7 @@ class ServiceRequestDashboard extends Component {
 
             <Modal
                 show={this.state.showServiceReqDetailModal}
-                onHide={this.closServiceReqDetailModal}
+                onHide={this.closeServiceReqDetailModal}
                 size="lg"
                        backdrop="static"
                        centered>
@@ -160,7 +159,7 @@ class ServiceRequestDashboard extends Component {
                     <ServiceRequestDetailsModal 
                         serviceRequest = {this.state.selectedServiceReq}
                         arrAllEmployee={this.props.employees}
-                        closServiceReqDetailModal= {this.closServiceReqDetailModal}
+                        closeServiceReqDetailModal= {this.closeServiceReqDetailModal}
 
                     />
                 </Modal.Body>
@@ -175,12 +174,12 @@ class ServiceRequestDashboard extends Component {
 ServiceRequestDashboard.propTypes = {
     getAllServiceRequest : PropTypes.func.isRequired,
     getAllCompanyEmployees: PropTypes.func.isRequired,
-    serviceRequests : PropTypes.array.isRequired,
+    service_requests : PropTypes.array.isRequired,
     employees:PropTypes.array.isRequired,
 }
 
 const mapStateToProp = (state)=>({
-    serviceRequests:state.serviceRequest.serviceRequests,
+    service_requests:state.serviceRequest.service_requests,
     employees:state.employee.employees,
 })
 
