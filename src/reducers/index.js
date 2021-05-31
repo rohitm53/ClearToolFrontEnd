@@ -8,6 +8,7 @@ import employeeServiceReducer from './employeeServiceReducer';
 import dashboardReducer from './dashboardReducer';
 import securityReducer from './securityReducer';
 import serviceRequestsReducer from './serviceRequestsReducer';
+import companyAvailableTimeSlotsReducer from './companyAvailableTimeSlotsReducer';
 
 export default combineReducers({
     security: securityReducer,
@@ -18,5 +19,6 @@ export default combineReducers({
     employeeService: employeeServiceReducer,
     asset: assetReducer,
     dashboardState: dashboardReducer,
-    serviceRequest:serviceRequestsReducer
+    serviceRequest:serviceRequestsReducer,
+    timeSlots:companyAvailableTimeSlotsReducer
 });

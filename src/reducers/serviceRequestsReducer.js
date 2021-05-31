@@ -1,5 +1,7 @@
-import {GET_ALL_SERVICE_REQUEST,GET_AVAILABLE_EMPLOYEE_FOR_SERVICE,
-    POST_ASSIGN_EMPLOYEE_REQUEST} from '../actions/types';
+import {
+    GET_ALL_SERVICE_REQUEST,
+    POST_ASSIGN_EMPLOYEE_REQUEST,
+} from '../actions/types';
 
 const initialState = {
     service_requests:[],
@@ -20,6 +22,7 @@ export default function (state=initialState,action) {
             ...state,
             assignEmployeeResponse:action.payload
         }
+   
     }
     
 }

@@ -64,7 +64,7 @@ class ServiceRequestDetailsModal extends Component {
             }
             this.props.postAssignEmployeeRequest(assignEmployeeRequest);
         }else{
-            this.props.closServiceReqDetailModal(false);
+            this.props.closeServiceReqDetailModal(false);
         }
       
     }
