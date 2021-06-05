@@ -35,7 +35,8 @@ class ServiceRequestDashboard extends Component {
         this.state = {
             showServiceReqDetailModal:false,
             selectedServiceReq:{},
-            selected_date: new Date().toISOString().split('T')[0]
+            selected_date: new Date().toISOString().split('T')[0],
+            isLoading:false
         }
     }
 
@@ -56,13 +57,18 @@ class ServiceRequestDashboard extends Component {
 
     closeServiceReqDetailModal =(isRefresReq) => {
 
-        if(isRefresReq){
-          window.location.reload(false);
-        }
 
         this.setState({
             showServiceReqDetailModal:false,
             selectedServiceReq:{}
+        },()=> {
+            if(isRefresReq){
+               setTimeout(()=> {
+                    this.props.getAllServiceRequest();
+                    this.props.getAllCompanyEmployees();
+                    this.props.getCompanyAvailableTimeSlotsByDate(this.state.selected_date);
+               },2000);
+            }
         });
     }
 

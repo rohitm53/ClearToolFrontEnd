@@ -63,6 +63,7 @@ class ServiceRequestDetailsModal extends Component {
                 assignedEmployeeCode:this.state.selectedEmployee.employeeCode
             }
             this.props.postAssignEmployeeRequest(assignEmployeeRequest);
+            this.props.closeServiceReqDetailModal(true);
         }else{
             this.props.closeServiceReqDetailModal(false);
         }
@@ -176,8 +177,5 @@ ServiceRequestDetailsModal.propTypes = {
      }
 }
 
-// const mapStateToProp = (state) => ({
-//     availableEmployeeCode:state.serviceRequest.availableEmployeeCode
-// })
 
 export default connect(mapStateToProp,{postAssignEmployeeRequest})(ServiceRequestDetailsModal);

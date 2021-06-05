@@ -23,11 +23,10 @@ export const postAssignEmployeeRequest = (assignEmployeeRequest) => async dispat
 
     try{
         const res = await axios.post("/api/company/service-request/assignee-employee",assignEmployeeRequest);
-        console.log("res",res);
-        dispatch({
-            type:POST_ASSIGN_EMPLOYEE_REQUEST,
-            payload:res.data
-        });
+        // dispatch({
+        //     type:POST_ASSIGN_EMPLOYEE_REQUEST,
+        //     payload:res.data
+        // });
 
     }catch(err){
         dispatch({

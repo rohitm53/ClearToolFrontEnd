@@ -23,7 +23,7 @@ export const createService = (service, history) => async dispatch => {
 
 export const getAllServices = () => async dispatch => {
     try {
-        const res = await axios.get("api/company/service-request/all");
+        const res = await axios.get("api/services/all");
         dispatch({
             type: GET_ALL_SERVICES,
             payload: res.data
