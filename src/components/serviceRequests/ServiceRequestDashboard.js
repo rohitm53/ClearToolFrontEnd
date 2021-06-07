@@ -2,31 +2,18 @@ import React, { Component } from 'react'
 import ServiceReqestItem from './ServiceReqestItem';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {
-    getAllServiceRequest
-} from '../../actions/serviceRequestActions';
-
-import { 
-    getAllCompanyEmployees
- } from '../../actions/employeeActions';
-
-import {
-    generateCompanyTimeSlotsForDate,
-    getCompanyAvailableTimeSlotsByDate
-} from '../../actions/timeSlotsAction';
-
-import {
-     ASSIGNED_SERVICE_REQ, CANCELED_SERVICE_REQ, 
-     COMPLETED_SERVICE_REQ, 
-    INPROGRESS_SERVICE_REQ, 
-    PENDING_SERVICE_REQ } from '../../constants/Constants';
-import {
-    Start_TIME,
-    End_TIME
-}   from '../../constants/Constants' 
+import "./ServiceRequestItem.css";
+import { getAllServiceRequest } from '../../actions/serviceRequestActions';
+import { getAllCompanyEmployees} from '../../actions/employeeActions';
+import { generateCompanyTimeSlotsForDate,getCompanyAvailableTimeSlotsByDate} from '../../actions/timeSlotsAction';
+import {showLoader,hideLoader} from '../../actions/applicationAction';
+import {ASSIGNED_SERVICE_REQ, CANCELED_SERVICE_REQ, COMPLETED_SERVICE_REQ, 
+     INPROGRESS_SERVICE_REQ,  PENDING_SERVICE_REQ } from '../../constants/Constants';
+import {Start_TIME,  End_TIME}   from '../../constants/Constants' 
 import { Modal } from 'react-bootstrap';
 import ServiceRequestDetailsModal from './ServiceRequestDetailsModal';
 import TimeSlotComponent from './TimeSlotComponent';
+import store from '../../store';
 
 class ServiceRequestDashboard extends Component {
 
@@ -41,6 +28,7 @@ class ServiceRequestDashboard extends Component {
     }
 
     componentDidMount(){
+        store.dispatch(showLoader());
         this.props.getAllServiceRequest();
         this.props.getAllCompanyEmployees();
         this.props.getCompanyAvailableTimeSlotsByDate(this.state.selected_date);
@@ -57,17 +45,15 @@ class ServiceRequestDashboard extends Component {
 
     closeServiceReqDetailModal =(isRefresReq) => {
 
-
         this.setState({
             showServiceReqDetailModal:false,
             selectedServiceReq:{}
         },()=> {
             if(isRefresReq){
-               setTimeout(()=> {
-                    this.props.getAllServiceRequest();
-                    this.props.getAllCompanyEmployees();
-                    this.props.getCompanyAvailableTimeSlotsByDate(this.state.selected_date);
-               },2000);
+                store.dispatch(showLoader());
+                this.props.getAllServiceRequest();
+                this.props.getAllCompanyEmployees();
+                this.props.getCompanyAvailableTimeSlotsByDate(this.state.selected_date);
             }
         });
     }
@@ -86,6 +72,12 @@ class ServiceRequestDashboard extends Component {
             endTime : End_TIME
         }
         this.props.generateCompanyTimeSlotsForDate(request);
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.available_time_slots){
+            store.dispatch(hideLoader());
+        }
     }
 
     render() {
@@ -160,11 +152,8 @@ class ServiceRequestDashboard extends Component {
         
                 <div className="row">
                     <div className="col-md-3">
-
-                        <div className="card text-center my-2">
-                            <div className="card-header bg-info text-white">
-                                <h6>Pending</h6>
-                            </div>
+                        <div className="py-1 bg-primary text-center text-white">
+                            <h6>Pending</h6>
                         </div>
                         {
                             pendingReq
@@ -173,10 +162,8 @@ class ServiceRequestDashboard extends Component {
                     </div>
 
                     <div className="col-md-3">
-                        <div className="card text-center my-2">
-                            <div className="card-header bg-warning text-white">
-                                <h6>In-Progress</h6>
-                            </div>
+                        <div className="py-1 text-center bg-warning text-white">
+                            <h6>In-Progress</h6>
                         </div>
                         {
                             inProgressReq
@@ -184,10 +171,8 @@ class ServiceRequestDashboard extends Component {
                     </div>
 
                     <div className="col-md-3">
-                        <div className="card text-center my-2">
-                            <div className="card-header bg-success text-white">
-                                <h6>Completed</h6>
-                            </div>
+                        <div className="py-1 text-center bg-success text-white">
+                            <h6>Completed</h6>
                         </div>
 
                         {
@@ -196,10 +181,8 @@ class ServiceRequestDashboard extends Component {
                     </div>
 
                     <div className="col-md-3">
-                        <div className="card text-center my-2">
-                            <div className="card-header bg-danger text-white">
-                                <h6>Cancelled</h6>
-                            </div>
+                        <div className="py-1 bg-info text-center bg-danger text-white">
+                           <h6>Cancelled</h6>
                         </div>
                         {
                             cancelledReq

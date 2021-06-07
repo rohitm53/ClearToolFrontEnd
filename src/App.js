@@ -25,6 +25,7 @@ import { SET_CURRENT_COMPANY } from './actions/types';
 import { logOut } from './actions/securityActions';
 import SecuredRoute from './securityUtils/SecuredRoute';
 import ServiceRequestDashboard from './components/serviceRequests/ServiceRequestDashboard';
+import FullPageLoader from './components/common/fullPageloader/FullPageLoader';
 
 //For Security using JWT
 const jwtToken = localStorage.getItem("jwtToken");
@@ -91,6 +92,12 @@ class App extends Component {
               <SecuredRoute exact path="/servicerequests" component={ServiceRequestDashboard} />
 
             </Switch>
+            
+            { 
+              //Loader 
+            }
+            <FullPageLoader/>
+
           </div>
         </Router>
       </Provider>

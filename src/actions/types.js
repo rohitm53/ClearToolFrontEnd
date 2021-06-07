@@ -1,5 +1,7 @@
 // Common
 export const GET_ERRORS = "GET_ERRORS";
+export const SHOW_LOADER = "SHOW_LOADER";
+export const HIDE_LOADER = "HIDE_LOADER";
 
 //1. Login Actionss
 export const SET_CURRENT_COMPANY = "SET_CURRENT_COMPANY";

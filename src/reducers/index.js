@@ -9,8 +9,10 @@ import dashboardReducer from './dashboardReducer';
 import securityReducer from './securityReducer';
 import serviceRequestsReducer from './serviceRequestsReducer';
 import companyAvailableTimeSlotsReducer from './companyAvailableTimeSlotsReducer';
+import applicationReducer from './applicationReducer';
 
 export default combineReducers({
+    application:applicationReducer,
     security: securityReducer,
     errors: errorReducer,
     service: serviceReducers,
