@@ -20,7 +20,7 @@ class TimeSlotComponent extends Component {
                 const timeSlot = availableTimeSlots[i];
                 timeSlotsViews.push(
                     <div className="btn btn-info btn-sm m-1">{timeSlot.time} hrs<br/>
-                        <span class="badge badge-light">{timeSlot.availableEmployeeCount} mp</span>
+                        <span class="badge badge-light">{timeSlot.availableEmployeeCount} emp</span>
                     </div>
                 );
             }

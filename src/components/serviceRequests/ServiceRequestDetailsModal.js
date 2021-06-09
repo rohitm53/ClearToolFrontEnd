@@ -41,10 +41,7 @@ class ServiceRequestDetailsModal extends Component {
                 arrAvailableEmployee
             });
         }
-
-        if(nextProps.assignEmployeeResponse.statusCode===ASSIGNED_SERVICE_REQ){
-            this.props.closeServiceReqDetailModal(true);
-        }
+    
     }
    
     handleSelect = (selection) => {
@@ -72,13 +69,13 @@ class ServiceRequestDetailsModal extends Component {
 
 
     render() {
-        const {serviceRequest , arrAllEmployee} = this.props;
+        const {serviceRequest , availableEmployees} = this.props;
         let assignEmployeeCol;
         if(serviceRequest.statusCode===PENDING_SERVICE_REQ){
             assignEmployeeCol= (
                 <Select
                     name="Select Employee"
-                    options={arrAllEmployee}
+                    options={availableEmployees}
                     getOptionLabel = {(employee)=>employee.firstName + employee.lastName}
                     getOptionValue={(employee)=>employee.employeeCode}
                     onChange = {(selection,action)=>this.handleSelect(selection)}
@@ -87,14 +84,14 @@ class ServiceRequestDetailsModal extends Component {
         }else{
             assignEmployeeCol = (
                 <div>
-                    <div className="font-weight-bold">{serviceRequest.assignedEmployeeName}</div>
+                    <div className="font-weight-bold">{serviceRequest.assignedEmployeeName} ({serviceRequest.assignedEmployeeCode}) </div>
                     <div className="font-weight-bold"> Ph: {serviceRequest.assignedEmployeeMobile}</div>
                 </div>
             );
         }
 
 
-        if(arrAllEmployee.length>0){
+        if(availableEmployees.length>0){
             return (
                 <div className="card">
                 <div className="card-body boder-danger">
@@ -163,16 +160,12 @@ class ServiceRequestDetailsModal extends Component {
 }
 
 ServiceRequestDetailsModal.propTypes = {
-    availableEmployeeCode:PropTypes.array.isRequired,
     postAssignEmployeeRequest:PropTypes.func.isRequired,
-    assignEmployeeResponse:PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 }
 
  function mapStateToProp(state) {
      return {
-        availableEmployeeCode:state.serviceRequest.availableEmployeeCode,
-        assignEmployeeResponse:state.serviceRequest.assignEmployeeResponse,
         errors: state.errors
      }
 }

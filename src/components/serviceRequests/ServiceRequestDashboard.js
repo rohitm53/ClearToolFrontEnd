@@ -3,8 +3,7 @@ import ServiceReqestItem from './ServiceReqestItem';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import "./ServiceRequestItem.css";
-import { getAllServiceRequest } from '../../actions/serviceRequestActions';
-import { getAllCompanyEmployees} from '../../actions/employeeActions';
+import { getAllServiceRequest , getAllAvailableEmployees } from '../../actions/serviceRequestActions';
 import { generateCompanyTimeSlotsForDate,getCompanyAvailableTimeSlotsByDate} from '../../actions/timeSlotsAction';
 import {showLoader,hideLoader} from '../../actions/applicationAction';
 import {ASSIGNED_SERVICE_REQ, CANCELED_SERVICE_REQ, COMPLETED_SERVICE_REQ, 
@@ -22,7 +21,8 @@ class ServiceRequestDashboard extends Component {
         this.state = {
             showServiceReqDetailModal:false,
             selectedServiceReq:{},
-            selected_date: new Date().toISOString().split('T')[0],
+            // selected_date: new Date().toISOString().split('T')[0],
+            selected_date:'2021-06-08',
             isLoading:false
         }
     }
@@ -30,7 +30,7 @@ class ServiceRequestDashboard extends Component {
     componentDidMount(){
         store.dispatch(showLoader());
         this.props.getAllServiceRequest();
-        this.props.getAllCompanyEmployees();
+        this.props.getAllAvailableEmployees({date : this.state.selected_date});
         this.props.getCompanyAvailableTimeSlotsByDate(this.state.selected_date);
     }
 
@@ -51,9 +51,11 @@ class ServiceRequestDashboard extends Component {
         },()=> {
             if(isRefresReq){
                 store.dispatch(showLoader());
-                this.props.getAllServiceRequest();
-                this.props.getAllCompanyEmployees();
-                this.props.getCompanyAvailableTimeSlotsByDate(this.state.selected_date);
+                setTimeout(()=> {
+                    this.props.getAllServiceRequest();
+                    this.props.getAllAvailableEmployees( {date : this.state.selected_date});
+                    this.props.getCompanyAvailableTimeSlotsByDate(this.state.selected_date);
+                },2000);
             }
         });
     }
@@ -75,6 +77,7 @@ class ServiceRequestDashboard extends Component {
     }
 
     componentWillReceiveProps(nextProps){
+
         if(nextProps.available_time_slots){
             store.dispatch(hideLoader());
         }
@@ -89,6 +92,7 @@ class ServiceRequestDashboard extends Component {
         let serviceReqComponent=[];
 
         let pendingReq=[];
+        let assignedReq=[];
         let inProgressReq=[];
         let completedReq=[];
         let cancelledReq=[];
@@ -116,7 +120,9 @@ class ServiceRequestDashboard extends Component {
     
                 if(statusCode===PENDING_SERVICE_REQ){
                     pendingReq.push(component);
-                }else if(statusCode===ASSIGNED_SERVICE_REQ || statusCode===INPROGRESS_SERVICE_REQ){
+                }else if(statusCode===ASSIGNED_SERVICE_REQ){
+                    assignedReq.push(component);
+                } else if(statusCode===INPROGRESS_SERVICE_REQ){
                     inProgressReq.push(component);
                 }else if(statusCode===COMPLETED_SERVICE_REQ){
                     completedReq.push(component);
@@ -130,7 +136,7 @@ class ServiceRequestDashboard extends Component {
         }
 
         return (
-           <div className="container">
+           <div className="container-fluid">
 
                 <div className="row">
                     <form className="col-md-3">
@@ -150,8 +156,9 @@ class ServiceRequestDashboard extends Component {
                     </div>
                 </div>
         
-                <div className="row">
-                    <div className="col-md-3">
+                <div className="row text-center">
+                    <div className="col-md-1"></div>
+                    <div className="col-md-2">
                         <div className="py-1 bg-primary text-center text-white">
                             <h6>Pending</h6>
                         </div>
@@ -161,7 +168,16 @@ class ServiceRequestDashboard extends Component {
 
                     </div>
 
-                    <div className="col-md-3">
+                    <div className="col-md-2">
+                        <div className="py-1 text-center bg-secondary text-white">
+                            <h6>Assigned</h6>
+                        </div>
+                        {
+                            assignedReq
+                        }
+                    </div>
+
+                    <div className="col-md-2">
                         <div className="py-1 text-center bg-warning text-white">
                             <h6>In-Progress</h6>
                         </div>
@@ -170,7 +186,7 @@ class ServiceRequestDashboard extends Component {
                         }
                     </div>
 
-                    <div className="col-md-3">
+                    <div className="col-md-2">
                         <div className="py-1 text-center bg-success text-white">
                             <h6>Completed</h6>
                         </div>
@@ -180,7 +196,7 @@ class ServiceRequestDashboard extends Component {
                         }
                     </div>
 
-                    <div className="col-md-3">
+                    <div className="col-md-2">
                         <div className="py-1 bg-info text-center bg-danger text-white">
                            <h6>Cancelled</h6>
                         </div>
@@ -188,7 +204,7 @@ class ServiceRequestDashboard extends Component {
                             cancelledReq
                         }
                     </div>
-
+                    <div className="col-md-1"></div>
                 </div>
 
                 <Modal
@@ -205,7 +221,7 @@ class ServiceRequestDashboard extends Component {
                     <Modal.Body>
                         <ServiceRequestDetailsModal 
                             serviceRequest = {this.state.selectedServiceReq}
-                            arrAllEmployee={this.props.employees}
+                            availableEmployees={this.props.availableEmployees}
                             closeServiceReqDetailModal= {this.closeServiceReqDetailModal}
 
                         />
@@ -220,20 +236,20 @@ class ServiceRequestDashboard extends Component {
 
 ServiceRequestDashboard.propTypes = {
     getAllServiceRequest : PropTypes.func.isRequired,
-    getAllCompanyEmployees: PropTypes.func.isRequired,
+    getAllAvailableEmployees: PropTypes.func.isRequired,
     service_requests : PropTypes.array.isRequired,
-    employees:PropTypes.array.isRequired,
+    availableEmployees:PropTypes.array.isRequired,
 }
 
 const mapStateToProp = (state)=>({
     service_requests:state.serviceRequest.service_requests,
-    employees:state.employee.employees,
+    availableEmployees:state.serviceRequest.availableEmployees,
     available_time_slots: state.timeSlots.available_time_slots,
 })
 
 export default connect(mapStateToProp,{
     getAllServiceRequest,
-    getAllCompanyEmployees,
+    getAllAvailableEmployees,
     generateCompanyTimeSlotsForDate,
     getCompanyAvailableTimeSlotsByDate,
 })(ServiceRequestDashboard);
