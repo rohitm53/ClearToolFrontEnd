@@ -57,7 +57,7 @@ class NavBar extends Component {
 
                             <div className="dropdown-menu" aria-labelledby="resources">
                                 <Link className="dropdown-item" 
-                                     to="/employeelist">Employee Management</Link>
+                                     to="/employees">Employee Management</Link>
                                      
                                 <Link className="dropdown-item" to="/assetlist">Assets</Link>
                             </div>

@@ -7,7 +7,7 @@ import store from './store';
 import NavBar from './components/layouts/NavBar';
 import Dashboard from './components/dashboard/Dashboard';
 import UpdateService from './components/service/UpdateService';
-import EmployeeList from './components/employees/EmployeeList';
+import EmployeeListDashboard from './components/employees/EmployeeListDashboard';
 import AddEmployee from './components/employees/AddEmployee';
 import UpdateEmployee from './components/employees/UpdateEmployee';
 import AddService from './components/service/AddService';
@@ -80,7 +80,7 @@ class App extends Component {
             <Switch>
               <SecuredRoute exact path="/dashboard" component={Dashboard} />
               <SecuredRoute exact path="/updateservice/:serviceCode" component={UpdateService} />
-              <SecuredRoute exact path="/employeelist" component={EmployeeList} />
+              <SecuredRoute exact path="/employees" component={EmployeeListDashboard} />
               <SecuredRoute exact path="/addemployee" component={AddEmployee} />
               <SecuredRoute exact path="/updateemployee/:employeecode" component={UpdateEmployee} />
               <SecuredRoute exact path="/addservice" component={AddService} />

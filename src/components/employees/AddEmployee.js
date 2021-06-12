@@ -299,7 +299,17 @@ class AddEmployee extends Component {
                         </form>
                     </div>
                 </div>
-               
+                {
+                    errors.errorMsg && (
+                        <div className="row ">
+                            <div className="col">
+                                <div class="alert alert-danger text-center" role="alert">
+                                      {errors.errorMsg}
+                                </div>
+                            </div>
+                        </div>
+                    )
+                }
                 <Modal show={this.state.confirmModalShow} 
                        onHide={this.closeComfirmModal} 
                        size="lg"

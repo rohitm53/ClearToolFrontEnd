@@ -7,7 +7,7 @@ import {
 export const postEmployee = (employee, history) => async dispatch => {
     try {
         await axios.post("/api/company/employee", employee);
-        history.push("/employeelist");
+        history.push("/employees");
         dispatch({
             type: GET_ERRORS,
             payload: {}

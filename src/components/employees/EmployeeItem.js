@@ -15,7 +15,7 @@ class EmployeeItem extends Component {
             <div className="container mb-3">
                 <div className="card">
                     <div className="card-header employee-card-header text-white">
-                        {employee.firstName + " " + employee.lastName}
+                        {employee.firstName + " " + employee.lastName}  ({employee.employeeCode})
                     </div>
                     <div className="card-body">
                         <div className="row">
@@ -24,7 +24,7 @@ class EmployeeItem extends Component {
                                 <p className="card-text">{employee.mobile}</p>
                             </div>
                             <div className="col-md-4">
-                                <Link to={`/updateemployee/${employee.employeeCode}`} className="btn btn-info mb-2">Update Details</Link>
+                                <Link to={`/updateemployee/${employee.employeeCode}`} className="btn btn-info mb-2">Update</Link>
                                 <button className="btn btn-danger" onClick={this.onEmployeeDelete.bind(this, employee.employeeCode)}>
                                     Delete
                                 </button>

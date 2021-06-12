@@ -24,7 +24,7 @@ export const getAllAvailableEmployees = (request) => async dispatch => {
 
     try{
         console.log("request",request);
-        const res = await axios.post('/api/company/service-request/employee-available',request);
+        const res = await axios.post('/api/company/service-request/available-employee',request);
         dispatch({
             type:GET_ALL_AVAILABLE_EMPLOYEE,
             payload:res.data
