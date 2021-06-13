@@ -18,8 +18,13 @@ class TimeSlotComponent extends Component {
 
             for(let i=0 ; i<availableTimeSlots.length; i++){
                 const timeSlot = availableTimeSlots[i];
+                let cardClass = "btn btn-info btn-sm m-1";
+                if(timeSlot.availableEmployeeCount===0){
+                    cardClass="btn btn-danger btn-sm m-1"
+                }
+
                 timeSlotsViews.push(
-                    <div className="btn btn-info btn-sm m-1">{timeSlot.time} hrs<br/>
+                    <div className={cardClass}>{timeSlot.time} hrs<br/>
                         <span class="badge badge-light">{timeSlot.availableEmployeeCount} emp</span>
                     </div>
                 );

@@ -91,7 +91,6 @@ class ServiceRequestDetailsModal extends Component {
         }
 
 
-        if(availableEmployees.length>0){
             return (
                 <div className="card">
                 <div className="card-body boder-danger">
@@ -139,23 +138,7 @@ class ServiceRequestDetailsModal extends Component {
                 </div>
                 </div>
             )
-        }else{
-          
-            return(
-                <div className="container">
-                    <div className="alert alert-danger">
-                        No Employee available for assigning this service
-                    </div>
-                    <div className="text-center">
-                        <button className="btn btn-danger text-center" 
-                                 onClick = {this.props.closeServiceReqDetailModal.bind(this,false)}
-                        >OK</button>
-                    </div>
-                
-                </div>
-            )
-
-        }
+      
     }
 }
 

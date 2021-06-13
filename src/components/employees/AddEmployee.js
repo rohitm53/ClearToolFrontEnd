@@ -5,6 +5,8 @@ import classnames from 'classnames';
 import { postEmployee } from '../../actions/employeeActions';
 import { Modal } from 'react-bootstrap';
 import ConfirmEmployeeDetailsModal from './ConfirmEmployeeDetailsModal';
+import BottomRedAlert from '../common/commonbottonalert/BottomRedAlert';
+import {resetErrorAction} from '../../actions/applicationAction';
 
 class AddEmployee extends Component {
 
@@ -70,6 +72,10 @@ class AddEmployee extends Component {
             });
         }
     }
+
+    componentWillUnmount(){
+        this.props.resetErrorAction();
+      }
 
     openComfirmModal = (e) => {
         e.preventDefault();
@@ -301,13 +307,9 @@ class AddEmployee extends Component {
                 </div>
                 {
                     errors.errorMsg && (
-                        <div className="row ">
-                            <div className="col">
-                                <div class="alert alert-danger text-center" role="alert">
-                                      {errors.errorMsg}
-                                </div>
-                            </div>
-                        </div>
+                        <BottomRedAlert 
+                             errorMsg = {errors.errorMsg}
+                        />
                     )
                 }
                 <Modal show={this.state.confirmModalShow} 
@@ -342,7 +344,8 @@ class AddEmployee extends Component {
 AddEmployee.propTypes = {
     errors: PropTypes.object.isRequired,
     postEmployee: PropTypes.func.isRequired,
-    companyCode: PropTypes.string.isRequired
+    companyCode: PropTypes.string.isRequired,
+    resetErrorAction:PropTypes.func.isRequired
 }
 
 const mapPropToState = (state) => ({
@@ -350,4 +353,4 @@ const mapPropToState = (state) => ({
     companyCode: state.security.companySecurityInfo.companyCode
 });
 
-export default connect(mapPropToState, { postEmployee })(AddEmployee);
+export default connect(mapPropToState, { postEmployee , resetErrorAction })(AddEmployee);

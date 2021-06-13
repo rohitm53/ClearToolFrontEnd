@@ -5,13 +5,14 @@ import {connect} from 'react-redux';
 import "./ServiceRequestItem.css";
 import { getAllServiceRequest , getAllAvailableEmployees } from '../../actions/serviceRequestActions';
 import { generateCompanyTimeSlotsForDate,getCompanyAvailableTimeSlotsByDate} from '../../actions/timeSlotsAction';
-import {showLoader,hideLoader} from '../../actions/applicationAction';
+import {showLoader,hideLoader , resetErrorAction} from '../../actions/applicationAction';
 import {ASSIGNED_SERVICE_REQ, CANCELED_SERVICE_REQ, COMPLETED_SERVICE_REQ, 
      INPROGRESS_SERVICE_REQ,  PENDING_SERVICE_REQ } from '../../constants/Constants';
 import {Start_TIME,  End_TIME}   from '../../constants/Constants' 
 import { Modal } from 'react-bootstrap';
 import ServiceRequestDetailsModal from './ServiceRequestDetailsModal';
 import TimeSlotComponent from './TimeSlotComponent';
+import BottomRedAlert from '../common/commonbottonalert/BottomRedAlert';
 import store from '../../store';
 
 class ServiceRequestDashboard extends Component {
@@ -21,8 +22,8 @@ class ServiceRequestDashboard extends Component {
         this.state = {
             showServiceReqDetailModal:false,
             selectedServiceReq:{},
-            // selected_date: new Date().toISOString().split('T')[0],
-            selected_date:'2021-06-08',
+            selected_date: new Date().toISOString().split('T')[0],
+            // selected_date:'2021-06-08',
             isLoading:false
         }
     }
@@ -83,10 +84,14 @@ class ServiceRequestDashboard extends Component {
         }
     }
 
+    componentWillUnmount(){
+      this.props.resetErrorAction();
+    }
+
     render() {
 
 
-        const {service_requests , available_time_slots} = this.props;
+        const {service_requests , available_time_slots,errors} = this.props;
         const {selected_date} = this.state;
 
         let serviceReqComponent=[];
@@ -206,7 +211,13 @@ class ServiceRequestDashboard extends Component {
                     </div>
                     <div className="col-md-1"></div>
                 </div>
-
+                {
+                    errors.errorMsg && (
+                        <div className="fixed-bottom">
+                             <BottomRedAlert errorMsg = {errors.errorMsg}  />
+                        </div>
+                    )
+                }
                 <Modal
                     show={this.state.showServiceReqDetailModal}
                     onHide={this.closeServiceReqDetailModal}
@@ -239,12 +250,15 @@ ServiceRequestDashboard.propTypes = {
     getAllAvailableEmployees: PropTypes.func.isRequired,
     service_requests : PropTypes.array.isRequired,
     availableEmployees:PropTypes.array.isRequired,
+    resetErrorAction : PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired
 }
 
 const mapStateToProp = (state)=>({
     service_requests:state.serviceRequest.service_requests,
     availableEmployees:state.serviceRequest.availableEmployees,
     available_time_slots: state.timeSlots.available_time_slots,
+    errors: state.errors,
 })
 
 export default connect(mapStateToProp,{
@@ -252,4 +266,5 @@ export default connect(mapStateToProp,{
     getAllAvailableEmployees,
     generateCompanyTimeSlotsForDate,
     getCompanyAvailableTimeSlotsByDate,
+    resetErrorAction
 })(ServiceRequestDashboard);

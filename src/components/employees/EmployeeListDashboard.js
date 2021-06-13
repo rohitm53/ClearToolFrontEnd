@@ -26,7 +26,6 @@ class EmployeeListDashboard extends Component {
             <div className="container-fluid mt-3">
                 <div className="row">
                     <div className="col-md-6">
-                        
                         <div className="input-group">
                             <input type="text" placeholder="--Search Employee by name/code/phone/email." className="form-control" />
                             <div className="input-group-append">
