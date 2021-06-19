@@ -23,13 +23,13 @@ class ServiceRequestDashboard extends Component {
             showServiceReqDetailModal:false,
             selectedServiceReq:{},
             selected_date: new Date().toISOString().split('T')[0],
-            // selected_date:'2021-06-08',
             isLoading:false
         }
     }
 
     componentDidMount(){
         store.dispatch(showLoader());
+        this.props.resetErrorAction();
         this.props.getAllServiceRequest();
         this.props.getAllAvailableEmployees({date : this.state.selected_date});
         this.props.getCompanyAvailableTimeSlotsByDate(this.state.selected_date);
@@ -250,6 +250,7 @@ ServiceRequestDashboard.propTypes = {
     getAllAvailableEmployees: PropTypes.func.isRequired,
     service_requests : PropTypes.array.isRequired,
     availableEmployees:PropTypes.array.isRequired,
+    available_time_slots:PropTypes.array.isRequired,
     resetErrorAction : PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired
 }
